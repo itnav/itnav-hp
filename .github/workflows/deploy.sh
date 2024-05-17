@@ -11,7 +11,7 @@ ssh-keyscan $VPS_HOST >> ~/.ssh/known_hosts
 echo "Host: $VPS_HOST"
 echo "Port: $VPS_PORT"
 echo "User: $VPS_USER"
-echo "Key: ~/.ssh/vps $VPS_SSH_KEY"
+echo "cat ~/.ssh/vps"
 
 # # SSH 接続設定の重複削除
 # sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
