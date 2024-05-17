@@ -11,7 +11,7 @@ services:
       - 443:443
     environment:
       DOMAINS: ${REVERSE_PROXY_HOST} -> http://${WEB_CONTAINER_NAME}:${WEB_PORT}
-      STAGE: staging
+      STAGE: production
     volumes:
       - ../../reverse-proxy/production/cert:/var/lib/https-portal
 
