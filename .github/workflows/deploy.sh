@@ -6,7 +6,7 @@ echo "$VPS_SSH_KEY" > ~/.ssh/vps
 chmod 600 ~/.ssh/vps
 
 # SSH 接続設定
-ssh-keyscan $VPS_HOST >> ~/.ssh/known_hosts
+ssh-keyscan -p $VPS_PORT $VPS_HOST >> ~/.ssh/known_hosts
 
 # SSH 接続設定の重複削除
 sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
