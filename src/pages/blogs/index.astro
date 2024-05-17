@@ -16,17 +16,6 @@ import BlogsSearchNav from './_/BlogsSearchNav.svelte';
       'blogs-page app-page-padding-y app-page-padding-x app-limit-design-width',
   }}
 >
-  <script data-astro-rerun>
-    document.addEventListener(
-      'astro:page-load',
-      () =>
-        document
-          .getElementById('blogs')
-          ?.scrollIntoView({ behavior: 'smooth' }),
-      { once: true },
-    );
-  </script>
-
   <BlogsHeading client:idle />
 
   <BlogsSearchNav client:idle />
