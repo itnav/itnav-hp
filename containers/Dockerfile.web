@@ -1,6 +1,3 @@
-# Bun の Docker Registry からイメージを取得
-FROM oven/bun:latest as bun
-
 # pnpm のセットアップをするステージ
 FROM node:latest as base
 	# 環境変数の設定
@@ -14,10 +11,7 @@ FROM node:latest as base
 	RUN npm i -g bun
 
 	## 依存関係の情報をコピー
-	COPY ./package.json ./bun.lockb
-
-	## 環境変数をコピー（.env.local より優先的に読み込まれるように）
-	COPY ./.env ./.env.production.local
+	COPY ./package.json ./bun.lockb ./
 
 
 # 本番環境用の依存関係をインストールするステージ
@@ -38,6 +32,9 @@ FROM builder-deps as builder
 
 	# 全てのファイルをコピー
 	COPY . .
+
+	# 環境変数を本番環境のものに上書き
+	COPY ./.env ./.env.local
 
 	## ビルド
 	RUN npm run build
