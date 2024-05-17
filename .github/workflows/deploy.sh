@@ -5,11 +5,11 @@ mkdir -p ~/.ssh
 echo "$VPS_SSH_KEY" > ~/.ssh/vps
 chmod 600 ~/.ssh/vps
 
-# SSH 接続設定
-ssh-keyscan -p $VPS_PORT $VPS_HOST >> ~/.ssh/known_hosts
+# # SSH 接続設定
+# ssh-keyscan -p $VPS_PORT $VPS_HOST >> ~/.ssh/known_hosts
 
-# SSH 接続設定の重複削除
-sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
+# # SSH 接続設定の重複削除
+# sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
 
 # 環境変数のリストを生成
 env_list=$(compgen -v | awk '{printf "$%s,", $0}' | sed 's/,$//')
