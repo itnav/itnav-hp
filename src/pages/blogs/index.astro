@@ -12,7 +12,8 @@ import BlogsSearchNav from './_/BlogsSearchNav.svelte';
       'イトナブに関係するお知らせ、ブログを掲載しています。教育や開発など様々な分野のお知らせやブログを随時更新していきますので是非ご覧ください。',
   }}
   main={{
-    class: 'main app-page-padding-y app-page-padding-x app-limit-design-width',
+    class:
+      'blogs-page app-page-padding-y app-page-padding-x app-limit-design-width',
   }}
 >
   <script data-astro-rerun>
@@ -31,10 +32,13 @@ import BlogsSearchNav from './_/BlogsSearchNav.svelte';
   <BlogsSearchNav client:idle />
 
   <Blogs client:idle transition:name="blog" contentElementId="blogs" />
+
+  <!-- Footer を削除 -->
+  <Fragment slot="footer"></Fragment>
 </Layout>
 
 <style scoped lang="scss">
-  :global(.main) {
+  :global(.blogs-page) {
     width: 100%;
   }
 </style>
