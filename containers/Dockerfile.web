@@ -14,7 +14,10 @@ FROM node:latest as base
 	RUN npm i -g bun
 
 	## 依存関係の情報をコピー
-	COPY ./package.json ./bun.lockb ./.env ./
+	COPY ./package.json ./bun.lockb
+
+	## 環境変数をコピー（.env.local より優先的に読み込まれるように）
+	COPY ./.env ./.env.production.local
 
 
 # 本番環境用の依存関係をインストールするステージ
