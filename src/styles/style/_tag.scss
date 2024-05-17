@@ -1,0 +1,79 @@
+@use '../core' as *;
+
+html {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: $on-background;
+  letter-spacing: 1.5px;
+  color-scheme: light;
+  background-color: $background;
+  font-synthesis: none;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: 'transparent';
+
+  @include pc {
+    font-size: 18px;
+  }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: $background;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  line-height: 2;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  background-color: inherit;
+  border: none;
+  outline: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+picture {
+  display: block;
+}
+
+img {
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: 100%;
+}
+
+astro-island,
+astro-slot,
+astro-static-slot {
+  display: contents;
+}

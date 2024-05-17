@@ -1,0 +1,78 @@
+---
+import Top3TopThreeElementsDescription from './Top3TopThreeElementsDescription.svelte';
+import Top3TopThreeElementsHeading from './Top3TopThreeElementsHeading.svelte';
+import Top3TopThreeElementsSvg from './Top3TopThreeElementsSvg.svelte';
+---
+
+<section class="section">
+  <div class="container app-page-outer-padding-x app-limit-design-width">
+    <div class="heading-content">
+      <Top3TopThreeElementsHeading client:visible />
+    </div>
+
+    <div class="figure-flame">
+      <Top3TopThreeElementsSvg />
+    </div>
+
+    <div class="paragraph app-page-inner-padding-x">
+      <Top3TopThreeElementsDescription client:visible />
+    </div>
+  </div>
+</section>
+
+<style scoped lang="scss">
+  .section {
+    box-sizing: border-box;
+    padding-top: 104px;
+    padding-bottom: 104px;
+    margin-bottom: 40px;
+    color: $white;
+    background-color: $inverse-background;
+
+    @include pc {
+      padding-top: 140px;
+      padding-bottom: 140px;
+      margin-bottom: 80px;
+    }
+  }
+
+  .container {
+    @include pc {
+      display: grid;
+      grid-template-areas:
+        'h figure'
+        'p figure';
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr minmax(0, 0.8fr);
+      gap: 0 24px;
+    }
+  }
+
+  .heading-content {
+    margin-bottom: 40px;
+  }
+
+  .figure-flame {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: design-width(min);
+    margin: 0 auto 48px;
+
+    @include pc {
+      grid-area: figure;
+      width: auto;
+      max-width: 100%;
+      height: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  .paragraph {
+    @include pc {
+      grid-area: p;
+    }
+  }
+</style>

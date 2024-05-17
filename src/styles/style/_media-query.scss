@@ -1,0 +1,13 @@
+@use '../core' as *;
+
+.app-pc-only {
+  @include mp {
+    display: none;
+  }
+}
+
+.app-mp-only {
+  @include pc {
+    display: none;
+  }
+}

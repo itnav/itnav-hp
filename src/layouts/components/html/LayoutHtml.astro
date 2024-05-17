@@ -1,0 +1,18 @@
+---
+export type { Props as LayoutHtmlProps };
+type Props = astroHTML.JSX.Attributes<'html'>;
+
+const attrs = Astro.props;
+---
+
+<!doctype html>
+<html
+  transition:animate="fade"
+  transition:name="layout-html"
+  lang="ja"
+  {...attrs}
+>
+  <slot />
+
+
+</html>

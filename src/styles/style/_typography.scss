@@ -1,0 +1,48 @@
+@use '../core' as *;
+
+.app-jp {
+  font-family: $font-family-jp;
+}
+.app-en {
+  font-family: $font-family-en;
+}
+%app-mono {
+  font-family: $font-family-mono;
+}
+.app-mono {
+  @extend %app-mono;
+}
+
+.app-h1 {
+  font-size: rpx(56rpx, mp);
+  line-height: 1;
+  letter-spacing: 4px;
+}
+.app-sub-h1 {
+  font-size: rpx(48rpx, mp);
+  line-height: 1;
+  color: $white;
+  letter-spacing: 4px;
+  @include text-shadow(1px, $black);
+}
+
+.app-h2 {
+  @extend %app-mono;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+}
+
+@include pc {
+  .app-h1 {
+    font-size: rpx(min(200px, 200rpx), pc);
+  }
+  .app-sub-h1 {
+    font-size: rpx(min(180px, 180rpx), pc);
+  }
+  .app-h2 {
+    margin-bottom: 16px;
+    font-size: 40px;
+  }
+}

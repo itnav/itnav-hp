@@ -1,0 +1,42 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": false,
+  "editor.detectIndentation": false,
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "never",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+
+  "explorer.sortOrderLexicographicOptions": "unicode",
+
+  "files.associations": {
+    ".env.d.ts": "typescript"
+  },
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.validate": ["javascript", "typescript", "astro", "svelte"],
+
+  "stylelint.validate": ["css", "scss", "astro", "svelte"],
+
+  "prettier.documentSelectors": [
+    "**/*.svg",
+    "**/*.html",
+    "**/*.astro",
+    "**/*.svelte"
+  ],
+
+  "cSpell.userWords": [],
+  "yaml.schemas": {
+    "https://json.schemastore.org/yamllint.json": "file:///Users/junpei/Documents/Developments/itnav/itnav-hp/itnav-hp-astro/.github/workflows/deploy.yml"
+  },
+  "cSpell.words": ["steveltn"]
+}

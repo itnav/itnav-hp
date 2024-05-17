@@ -1,0 +1,25 @@
+---
+export type { Props as LayoutHeadMetaProps };
+type Props = {
+  charset?: string;
+  viewport?: string;
+  favicon?: {
+    href: string;
+    type: string;
+  };
+};
+
+const {
+  charset = 'UTF-8',
+  viewport = 'width=device-width',
+  favicon = {
+    href: '/favicon.svg',
+    type: 'image/svg+xml',
+  },
+} = Astro.props;
+---
+
+<meta charset={charset} />
+<link rel="icon" href={favicon.href} type={favicon.type} />
+<meta name="viewport" content={viewport} />
+<meta name="generator" content={Astro.generator} />

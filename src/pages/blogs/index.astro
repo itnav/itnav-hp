@@ -1,0 +1,40 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import BlogsHeading from './_/BlogsHeading.svelte';
+import Blogs from './_/Blogs.svelte';
+import BlogsSearchNav from './_/BlogsSearchNav.svelte';
+---
+
+<Layout
+  seo={{
+    title: 'NEWS&REPORT',
+    description:
+      'イトナブに関係するお知らせ、ブログを掲載しています。教育や開発など様々な分野のお知らせやブログを随時更新していきますので是非ご覧ください。',
+  }}
+  main={{
+    class: 'main app-page-padding-y app-page-padding-x app-limit-design-width',
+  }}
+>
+  <script data-astro-rerun>
+    document.addEventListener(
+      'astro:page-load',
+      () =>
+        document
+          .getElementById('blogs')
+          ?.scrollIntoView({ behavior: 'smooth' }),
+      { once: true },
+    );
+  </script>
+
+  <BlogsHeading client:idle />
+
+  <BlogsSearchNav client:idle />
+
+  <Blogs client:idle transition:name="blog" contentElementId="blogs" />
+</Layout>
+
+<style scoped lang="scss">
+  :global(.main) {
+    width: 100%;
+  }
+</style>

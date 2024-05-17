@@ -1,0 +1,31 @@
+version: '3.8'
+
+name: itnav-hp
+
+services:
+  reverse-proxy:
+    container_name: ${REVERSE_PROXY_CONTAINER_NAME}
+    image: steveltn/https-portal:latest
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      DOMAINS: ${REVERSE_PROXY_HOST} -> http://${WEB_CONTAINER_NAME}:${WEB_PORT}
+      STAGE: staging
+    volumes:
+      - ../../reverse-proxy/production/cert:/var/lib/https-portal
+
+  web:
+    container_name: ${WEB_CONTAINER_NAME}
+    build:
+      context: ../../
+      dockerfile: ./containers/Dockerfile.web
+      target: runtime
+    ports:
+      - ${WEB_PORT}:${WEB_PORT}
+    expose:
+      - ${WEB_PORT}
+    env_file:
+      - ../../${ENV_FILE}
+    environment:
+      HOST: 0.0.0.0

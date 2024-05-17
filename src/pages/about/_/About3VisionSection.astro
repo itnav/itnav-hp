@@ -1,0 +1,51 @@
+---
+import About3VisionSectionDescription from './About3VisionSectionDescription.svelte';
+import About3VisionSectionHeading from './About3VisionSectionHeading.svelte';
+import About3VisionSectionSubheading from './About3VisionSectionSubheading.svelte';
+import About3VisionSectionSvg from './About3VisionSectionSvg.svelte';
+import About3VisionSectionSvgFrame from './About3VisionSectionSvgFrame.svelte';
+---
+
+<section class="section app-page-padding-x app-limit-design-width">
+  <About3VisionSectionHeading client:visible />
+
+  <About3VisionSectionSubheading client:visible />
+
+  <div class="content">
+    <About3VisionSectionSvgFrame client:visible>
+      <About3VisionSectionSvg />
+    </About3VisionSectionSvgFrame>
+
+    <About3VisionSectionDescription client:visible />
+  </div>
+</section>
+
+<style scoped lang="scss">
+  .section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 80px;
+  }
+
+  .content {
+    position: relative;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 720px) {
+      flex-direction: column;
+    }
+
+    @include pc {
+      gap: 64px;
+    }
+  }
+
+  @include pc {
+    .section {
+      margin-bottom: 160px;
+    }
+  }
+</style>

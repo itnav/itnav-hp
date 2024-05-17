@@ -1,0 +1,26 @@
+@use 'sass:list';
+@forward 'sass:list';
+
+/// 第２引数で指定した index の要素を取得する。
+/// list.nth() との相違点は、list.nth() では引数で指定した index の要素が存在しない場合にエラーを吐くが、この関数では null を返す。
+///
+/// @param  {list}   $list  配列
+/// @param  {number} $index 取得する要素のインデックス
+/// @return {any}           取得した要素
+///
+/// @example
+/// ```scss
+/// $list: ('a', 'b', 'c');
+///
+/// .foo {
+/// 	property: get($list, 1); // => 'b'
+/// 	property: get($list, 8); // => null
+/// }
+/// ```
+@function get($list, $index) {
+  @if list.length($list) < $index {
+    @return null;
+  }
+
+  @return list.nth($list, $index);
+}

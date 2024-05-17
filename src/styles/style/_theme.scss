@@ -1,0 +1,23 @@
+@use '../core' as *;
+
+.app-primary-color {
+  color: $primary;
+}
+.app-primary-bg {
+  background-color: $primary;
+}
+.app-primary {
+  color: $primary;
+  background-color: $primary;
+}
+
+.app-accent-color {
+  color: $accent;
+}
+.app-accent-bg {
+  background-color: $accent;
+}
+.app-accent {
+  color: $accent;
+  background-color: $accent;
+}

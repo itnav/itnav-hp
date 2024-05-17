@@ -1,0 +1,52 @@
+@use '../core' as *;
+
+.app-page-padding-y {
+  box-sizing: border-box;
+  padding-top: 120px;
+  padding-bottom: 128px;
+
+  @include pc {
+    padding-top: 160px;
+    padding-bottom: 240px;
+  }
+}
+
+.app-page-outer-padding-x {
+  box-sizing: border-box;
+  padding-right: $page-outer-padding-mp-x;
+  padding-left: $page-outer-padding-mp-x;
+
+  @include pc {
+    padding-right: $page-outer-padding-pc-right;
+    padding-left: $page-outer-padding-pc-left;
+  }
+}
+
+.app-page-inner-padding-x {
+  box-sizing: border-box;
+  padding-right: $page-inner-padding-mp-x;
+  padding-left: $page-inner-padding-mp-x;
+
+  @include pc {
+    padding-right: $page-inner-padding-pc-x;
+    padding-left: $page-inner-padding-pc-x;
+  }
+}
+
+// outer-padding と inner-padding を合わせた空白を付与する
+.app-page-padding-x {
+  box-sizing: border-box;
+  padding-right: $page-padding-mp-x;
+  padding-left: $page-padding-mp-x;
+
+  @include pc {
+    padding-right: $page-padding-pc-right;
+    padding-left: $page-padding-pc-left;
+  }
+}
+
+.app-limit-design-width {
+  max-width: design-width(max);
+  margin-right: auto;
+  margin-left: auto;
+}

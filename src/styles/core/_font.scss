@@ -1,0 +1,93 @@
+@use 'sass:map';
+@use './extensions/string';
+@use '@fontsource-variable/noto-sans-jp/scss/metadata' as noto-sans-jp;
+@use '@fontsource-variable/noto-sans-jp/scss/mixins' as noto-sans-jp-mixins;
+@use '@fontsource/roboto/scss/metadata' as roboto;
+@use '@fontsource/roboto/scss/mixins' as roboto-mixins;
+@use '@fontsource-variable/roboto-mono/scss/metadata' as roboto-mono;
+@use '@fontsource-variable/roboto-mono/scss/mixins' as roboto-mono-mixins;
+
+@forward '@fontsource-variable/noto-sans-jp/scss/metadata' as noto-sans-jp-*;
+@forward '@fontsource-variable/noto-sans-jp/scss/mixins' as noto-sans-jp-* show generator;
+@forward '@fontsource-variable/roboto-mono/scss/metadata' as roboto-mono-*;
+@forward '@fontsource-variable/roboto-mono/scss/mixins' as roboto-mono-* show generator;
+
+/// 日本語フォント
+$font-family-jp: noto-sans-jp.$family;
+
+/// 英語フォント
+$font-family-en: roboto.$family;
+
+/// 等幅フォント
+$font-family-mono: roboto-mono.$family;
+
+@mixin generator(
+  $props,
+  $family: null,
+  $display: null,
+  $weight: null,
+  $style: null,
+  $stretch: null,
+  $unicode-range: null,
+  $src: null,
+  $with-src-format: null
+) {
+  @if $with-src-format != false {
+    // `url("~@fontsource/...");` の ~ を削除する
+    $src: string.replace(#{map.get($props, src)}, 'url("~@', 'url("@');
+  }
+
+  $family: $family or map.get($props, font-family);
+  $style: $style or map.get($props, font-style);
+  $weight: $weight or map.get($props, font-weight);
+  $stretch: $stretch or map.get($props, font-stretch);
+  $display: $display or map.get($props, font-display);
+  $unicode-range: $unicode-range or map.get($props, unicode-range);
+
+  /* #{map.get($props, variant)} */
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight;
+    font-stretch: $stretch;
+    src: $src;
+    font-display: $display;
+    unicode-range: $unicode-range;
+  }
+}
+
+@mixin noto-sans-jp-faces() {
+  @include noto-sans-jp-mixins.generator(
+      $display: (
+        block,
+      )
+    )
+    using ($props) {
+    @include generator($props, $font-family-jp);
+  }
+}
+
+@mixin roboto-faces() {
+  @include roboto-mixins.generator(
+      $display: (
+        block,
+      ),
+      $weights: (
+        500,
+        700,
+      )
+    )
+    using ($props) {
+    @include generator($props, $font-family-en);
+  }
+}
+
+@mixin roboto-mono-faces(
+  $display: (
+    block,
+  )
+) {
+  @include roboto-mono-mixins.generator() using ($props) {
+    @include generator($props, $font-family-mono);
+  }
+}

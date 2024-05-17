@@ -1,0 +1,67 @@
+---
+import { mergeCssProperty } from '@/utils/css';
+
+export type { Props as OutlinedButtonProps };
+type Props<T extends astroHTML.JSX.Tags = astroHTML.JSX.Tags> =
+  astroHTML.JSX.Attributes<T> & {
+    tag: T;
+  };
+
+const { tag: Tag = 'button' as any, ...attrs } = Astro.props;
+---
+
+<Tag {...attrs} class={mergeCssProperty('underlined-button', attrs.class)}>
+  <span>
+    <slot />
+  </span>
+
+  <span class="arrow"></span>
+</Tag>
+
+<style scoped lang="scss">
+  .underlined-button {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 200px;
+    padding: 14px 16px 12px;
+    overflow: hidden;
+    font-family: $font-family-mono;
+    font-size: 16px;
+    line-height: 1;
+    color: inherit;
+    border-bottom: 2px solid currentColor;
+
+    @include pc {
+      font-size: 20px;
+    }
+
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      content: '';
+      filter: invert(100%);
+      mix-blend-mode: difference;
+    }
+
+    &:hover::after {
+      background: $inverse-surface;
+      animation: transition(wave-across-left-to-right, long5, emphasized);
+      animation-fill-mode: both;
+    }
+  }
+
+  .arrow {
+    width: 48px;
+    height: 4px;
+    margin-left: 32px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: skew(50deg);
+  }
+</style>

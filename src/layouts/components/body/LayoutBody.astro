@@ -1,0 +1,10 @@
+---
+export type { Props as LayoutBodyProps };
+type Props = astroHTML.JSX.Attributes<'body'>;
+
+const attrs = Astro.props;
+---
+
+<body {...attrs}>
+  <slot />
+</body>

@@ -1,0 +1,98 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use './extensions/list';
+@use './extensions/math';
+@use './extensions/string';
+@use './media-query' as *;
+@use './layout' as *;
+
+/// 画面幅に応じてフォントサイズを変更できるようにするサイズ値を取得する
+///
+/// @param  {number}  $px      ピクセル単位のフォントサイズ
+/// @param  {number}  $width   デザイン幅
+/// @param  {string?} $unit    単位 (default: vw)
+/// @param  {number?} $decimal 小数点以下の桁数 (default: 1)
+/// @return {string}           画面幅に応じたフォントサイズ
+///
+/// @example
+/// ```scss
+/// .example {
+/// 	// 画面幅が 1024px だったとき 24px になる vw 単位のフォントサイズ
+///   font-size: rpx(24px, 1024px);
+///
+///   // 画面幅がモバイル用のデザイン幅だったとき 24px になる vw 単位のフォントサイズ
+/// 	font-size: rpx(24px, mp);
+///
+/// 	// 画面幅が PC 用のデザイン幅だったとき 36px になる vw 単位のフォントサイズ（24px より小さくならず、42px より大きくならない）
+///   font-size: rpx(clamp(24px, 36rpx, 42px), pc);
+/// }
+/// ```
+///
+/// @example
+/// ```scss
+/// .example {
+/// 	// 画面幅がモバイル用のデザイン幅だったとき 24px になる vw 単位のフォントサイズ (小数点以下の桁数は最大２桁までとする)
+///   font-size: rpx(24px, mp, $decimal: 2);
+/// }
+/// ```
+@function rpx($px, $width, $unit: vw, $decimal: 1) {
+  $width: design-width($width) or $width;
+
+  // css関数を使用していた場合、その関数の第２引数に代入された値を px として扱う
+  $calc-name: null;
+  $calc-args: null;
+  @if (meta.type-of($px) == calculation) {
+    $calc-name: meta.calc-name($px);
+    $calc-args: meta.calc-args($px);
+    $px: list.get($calc-args, 2);
+  }
+
+  $rpx: math.number($px) + 0px;
+
+  $vw: math.div($rpx, $width) * (100 + math.unit-number($unit));
+
+  @if $decimal > 0 {
+    $mag: 10 * $decimal;
+    $vw: math.div(math.round($vw * $mag), $mag);
+  }
+
+  @if $calc-name {
+    $calc-args: list.set-nth($calc-args, 2, $vw);
+    $vw: string.unquote('#{$calc-name}(#{$calc-args})');
+  }
+
+  @return $vw;
+}
+
+/// 画面幅に応じてフォントサイズを変更できるようにするサイズ値を取得する
+///
+/// @param  {number}  $px      ピクセル単位のフォントサイズ
+/// @param  {number}  $width   デザイン幅
+/// @param  {string?} $unit    単位 (default: vw)
+/// @param  {number?} $decimal 小数点以下の桁数 (default: 1)
+/// @return {string}           画面幅に応じたフォントサイズ
+///
+/// @example
+/// ```scss
+/// .example {
+/// 	// 画面幅が 1024px だったとき 24px になる vw 単位のフォントサイズ
+///   @include rpx(24px, 1024px);
+///
+///   // 画面幅がモバイル用のデザイン幅だったとき 24px になる vw 単位のフォントサイズ
+/// 	@include rpx(24px, mp);
+///
+/// 	// 画面幅が PC 用のデザイン幅だったとき 36px になる vw 単位のフォントサイズ（24px より小さくならず、42px より大きくならない）
+///   @include rpx(clamp(24px, 36rpx, 42px), pc);
+/// }
+/// ```
+///
+/// @example
+/// ```scss
+/// .example {
+/// 	// 画面幅がモバイル用のデザイン幅だったとき 24px になる vw 単位のフォントサイズ (小数点以下の桁数は最大２桁までとする)
+/// 	@include rpx(24px, mp, $decimal: 2);
+/// }
+/// ```
+@mixin rpx($px, $width, $unit: vw, $decimal: 1) {
+  font-size: rpx($px-or-params, $width);
+}

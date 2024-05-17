@@ -1,0 +1,50 @@
+# Bun の Docker Registry からイメージを取得
+FROM oven/bun:latest as bun
+
+# pnpm のセットアップをするステージ
+FROM node:latest as base
+	# 環境変数の設定
+	ENV ROOT_DIR "/root"
+	ENV BIN_DIR "/usr/local/bin"
+
+	## アプリケーションのディレクトリへ移動
+	WORKDIR /app
+
+	## bun をインストール
+	RUN npm i -g bun
+
+	## 依存関係の情報をコピー
+	COPY ./package.json ./bun.lockb ./.env ./
+
+
+# 本番環境用の依存関係をインストールするステージ
+FROM base AS production-deps
+	## 依存関係のインストール
+	RUN bun i --production
+
+# 開発環境用の依存関係をインストールするステージ
+FROM base AS builder-deps
+	## 依存関係のインストール
+	RUN bun i
+
+
+# アプリケーションをビルドするステージ
+FROM builder-deps as builder
+	# 全てのファイルをコピー
+	COPY . .
+
+	## ビルド
+	RUN npm run build
+
+
+# アプリケーションを実行するステージ
+FROM oven/bun:distroless AS runtime
+
+	## 本番専用の依存関係をコピー
+	# COPY --from=production-deps /app/node_modules ./node_modules
+
+	## ビルドステージからビルド後の成果物をコピー
+	COPY --from=builder /app/dist ./
+
+	## アプリケーションの実行
+	CMD ["run", "./server/entry.mjs"]

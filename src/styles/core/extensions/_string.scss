@@ -1,0 +1,28 @@
+@use 'sass:string';
+@forward 'sass:string';
+
+/// 文字列を置換する
+///
+/// @param	{string}   $string 文字列
+/// @param	{string}   $from   置換対象の文字列
+/// @param	{string}   $to     置換後の文字列
+/// @param	{boolean?} $all    全て置換するかどうか (default: true)
+/// @return {string}           置換後の文字列
+///
+/// @example
+/// ```scss
+/// replace('hello world', 'world', 'sass'); // => 'hello sass'
+/// ```
+@function replace($string, $from, $to, $all: true) {
+  $index: string.index($string, $from);
+
+  @while $index != null {
+    $start: string.slice($string, 0, $index - 1);
+    $end: string.slice($string, $index + string.length($from));
+    $string: $start + $to + $end;
+
+    $index: if($all, string.index($string, $from), null);
+  }
+
+  @return $string;
+}

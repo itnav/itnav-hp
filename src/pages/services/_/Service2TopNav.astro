@@ -1,0 +1,78 @@
+---
+import OutlinedButton from '@/components/button/OutlinedButton.astro';
+
+export type Props = {
+  educationalProjectId: string;
+  developmentBusinessId: string;
+};
+
+const props = Astro.props;
+---
+
+<nav class="nav">
+  <OutlinedButton
+    tag="a"
+    class="link link1"
+    href={`#${props.educationalProjectId}`}
+    suffix={null}
+  >
+    教育事業
+  </OutlinedButton>
+
+  <OutlinedButton
+    tag="a"
+    class="link link-2"
+    href={`#${props.developmentBusinessId}`}
+    suffix={null}
+  >
+    開発事業
+  </OutlinedButton>
+</nav>
+
+<style scoped lang="scss">
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 104px;
+  }
+
+  .link {
+    flex-grow: 1;
+    padding: 16px;
+    font-size: 16px;
+    letter-spacing: 2.4px;
+    border: 3px solid $black;
+    opacity: 0;
+    transform: translateY(100px);
+    animation: transition(fade-up, extra-long2, ease-out) both;
+
+    &::after {
+      opacity: 0.2;
+    }
+  }
+
+  .link-1 {
+    animation-delay: 80ms;
+  }
+  .link-2 {
+    animation-delay: 240ms;
+  }
+
+  @include pc {
+    .nav {
+      flex-direction: row;
+      gap: 42px;
+      margin-bottom: 160px;
+    }
+
+    .link {
+      padding: 32px 0;
+      font-size: 24px;
+      line-height: 1.4;
+      text-align: center;
+      border: 6px solid $black;
+    }
+  }
+</style>

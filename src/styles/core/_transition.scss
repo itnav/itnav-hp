@@ -1,0 +1,178 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+
+/// トランジションの時間を指定するためのマップ
+///
+/// @see {@link https://m3.material.io/styles/motion/easing-and-duration/tokens-specs} 'Documents'
+$duration: (
+  short1: 40ms,
+  short2: 80ms,
+  short3: 120ms,
+  short4: 160ms,
+  short5: 200ms,
+
+  medium1: 240ms,
+  medium2: 280ms,
+  medium3: 320ms,
+  medium4: 360ms,
+  medium5: 400ms,
+
+  long1: 440ms,
+  long2: 480ms,
+  long3: 520ms,
+  long4: 560ms,
+  long5: 640ms,
+
+  extra-long1: 720ms,
+  extra-long2: 800ms,
+  extra-long3: 880ms,
+  extra-long4: 960ms,
+  extra-long5: 1000ms,
+) !default;
+
+/// トランジションのタイミング関数を指定するためのマップ
+///
+/// @see {@link https://m3.material.io/styles/motion/easing-and-duration/tokens-specs} 'Documents'
+$easing: (
+  // liner
+  liner: cubic-bezier(0, 0, 1, 1),
+  //
+  // standard
+  standard: cubic-bezier(0.2, 0, 0, 1),
+  standard-accelerate: cubic-bezier(0.2, 0, 1, 1),
+  standard-decelerate: cubic-bezier(0, 0, 0, 1),
+  //
+  // emphasized
+  emphasized: cubic-bezier(0.2, 0, 0, 1),
+  emphasized-decelerate: cubic-bezier(0.04, 0.6, 0.1, 1),
+  emphasized-accelerate: cubic-bezier(0.2, 0, 0.8, 0.14),
+  //
+  // legacy
+  legacy: cubic-bezier(0.4, 0, 0.2, 1),
+  legacy-decelerate: cubic-bezier(0, 0, 0.2, 1),
+  legacy-accelerate: cubic-bezier(0.4, 0, 1, 1)
+) !default;
+
+/// トランジションのタイミング関数を指定するためのマップのエイリアス
+$easing-alias: (
+  ease: map.get($easing, standard),
+  ease-in: map.get($easing, standard-accelerate),
+  ease-out: map.get($easing, standard-decelerate),
+  ease-in-out: map.get($easing, legacy),
+);
+
+/// $easing のエイリアス
+$timing-function: $easing;
+
+/// トランジションの時間を取得する
+///
+/// @param  {string} $value トランジションの種類
+/// @return {number}        トランジションの時間
+///
+/// @example
+/// ```scss
+/// .foo {
+///   transition: all duration(medium4) ease-out;
+/// }
+/// ```
+@function duration($value) {
+  @if meta.type-of($value) == number {
+    @return $value + 0ms;
+  }
+
+  $result: map.get($duration, $value);
+
+  @if not $result {
+    @error 'Invalid duration value: #{$value}.';
+  }
+
+  @return $result;
+}
+
+/// トランジションのタイミング関数を取得する
+///
+/// @param  {string} $value トランジションの種類
+/// @return {string}        トランジションのタイミング関数
+///
+/// @example
+/// ```scss
+/// .foo {
+///   transition: all 0.3s easing(ease);
+/// }
+/// ```
+@function easing($value) {
+  @if string.index($value, 'cubic-bezier') == 1 {
+    @return $value;
+  }
+
+  $result: map.get($easing, $value) or map.get($easing-alias, $value);
+
+  @if not $result {
+    @error 'Invalid timing function value: #{$value}.';
+  }
+
+  @return $result;
+}
+
+/// easing 関数のエイリアス
+@function timing-function($value) {
+  @return easing($value);
+}
+
+/// トランジションの値を取得する
+///
+/// @param  {string | list} $props    ランジションのプロパティ
+/// @param  {string}        $duration トランジションの時間
+/// @param  {string}        $easing   トランジションのタイミング関数
+/// @param  {string} 			  $delay    トランジションの遅延時間
+/// @return {string}                  トランジションの値
+@function value($props, $duration, $easing, $delay) {
+  $result: '';
+  $type: duration($duration) easing($easing) (duration($delay) or '');
+
+  @if meta.type-of($props) == string {
+    @return $props $type;
+  } @else {
+    @each $prop in $props {
+      $result: $result + $prop + ' ' + $type + ', ';
+    }
+    @return string.unquote(string.slice($result, 0, -3));
+  }
+}
+
+/// トランジションの値を取得する
+///
+/// @param  {string | list} $props    トランジションのプロパティ
+/// @param  {string?}       $duration トランジションの時間 (default: normal)
+/// @param  {string?}       $easing   トランジションのタイミング関数 (default: ease-out)
+/// @param  {string}        $delay    トランジションの遅延時間 (default: 0)
+/// @return {string}                  トランジションの値
+///
+/// @example
+/// ```scss
+/// .foo {
+/// 	transition: transition(opacity, long4, ease);
+/// }
+/// ```
+@function transition($props, $duration: normal, $easing: ease-out, $delay: 0) {
+  @return value($props, $duration, $easing, $delay);
+}
+
+/// トランジションを指定する
+///
+/// @param  {string | list} $props    トランジションのプロパティ
+/// @param  {string?}       $duration トランジションの時間 (default: normal)
+/// @param  {string?}       $easing   トランジションのタイミング関数 (default: ease-out)
+/// @param  {string}        $delay    トランジションの遅延時間 (default: 0)
+/// @return {string}                  トランジションの値
+///
+/// @example
+/// ```scss
+/// .foo {
+/// 	@include transition(opacity, long4, ease);
+/// }
+/// ```
+@mixin transition($prop, $duration: normal, $easing: ease-out, $delay: 0) {
+  transition: value($prop, $duration, $easing, $delay);
+}

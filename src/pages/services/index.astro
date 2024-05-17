@@ -1,0 +1,61 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Service1Heading from './_/Service1Heading.svelte';
+import Service2TopNav from './_/Service2TopNav.astro';
+import Service3EducationalProjects from './_/Service3EducationalProjects.astro';
+import Service4DevelopmentBusiness from './_/Service4DevelopmentBusiness.astro';
+
+const developmentBusinessId = 'development-business';
+const educationalProjectId = 'educational-project';
+---
+
+<Layout
+  seo={{
+    title: 'SERVICE | 株式会社イトナブ',
+    description:
+      'イトナブが行なっている小学生から大学生を対象にした横須賀プログラミングアカデミーなどの教育事業、webサイト制作などの開発事業、ソーシャルプロジェクトについて詳しく紹介しています。',
+  }}
+  main={{
+    class: 'app-page-padding-y app-page-padding-x app-limit-design-width',
+  }}
+>
+  <Service1Heading client:visible />
+
+  <Service2TopNav
+    educationalProjectId={educationalProjectId}
+    developmentBusinessId={developmentBusinessId}
+  />
+
+  <Service3EducationalProjects id={educationalProjectId} />
+
+  <Service4DevelopmentBusiness id={developmentBusinessId} />
+</Layout>
+
+<style scoped lang="scss">
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(.service-h2) {
+    margin-bottom: 4px;
+    font-size: rpx(max(24px, 56rpx), pc);
+    letter-spacing: 1.4px;
+    scroll-margin-top: 88px;
+
+    @include pc {
+      margin-bottom: 8px;
+      font-size: rpx(72px, pc);
+    }
+  }
+
+  :global(.service-h3) {
+    margin-bottom: 56px;
+    font-size: 16px;
+    letter-spacing: 2.2px;
+
+    @include pc {
+      margin-bottom: 64px;
+      font-size: 30px;
+    }
+  }
+</style>

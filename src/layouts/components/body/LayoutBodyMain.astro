@@ -1,0 +1,20 @@
+---
+import { mergeCssProperty } from '@/utils/css';
+
+export type { Props as LayoutBodyMainProps };
+type Props = astroHTML.JSX.Attributes<'main'>;
+
+const attrs = Astro.props;
+---
+
+<main {...attrs} class={mergeCssProperty('main', attrs.class)}>
+  <slot />
+</main>
+
+<style scoped lang="scss">
+  .main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+</style>

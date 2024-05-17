@@ -1,0 +1,34 @@
+$breakpoint: 1024px;
+
+/// この mixin の中で記述したスタイルは、PC のときのみ適用される
+///
+/// @example
+/// ```scss
+/// @include pc {
+///   .foo {
+/// 	  color: red;
+///   }
+/// }
+/// ```
+@mixin pc {
+  @media screen and (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+/// この mixin の中で記述したスタイルは、モバイルのときのみ適用される
+/// ただし、モバイルファーストのため、なるべく mp mixin は使わないようにする
+///
+/// @example
+/// ```scss
+/// @include mp {
+///   .foo {
+///     color: red;
+///   }
+/// }
+/// ```
+@mixin mp {
+  @media screen and (max-width: ($breakpoint - 1)) {
+    @content;
+  }
+}

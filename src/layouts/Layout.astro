@@ -1,51 +1,84 @@
 ---
-interface Props {
-	title: string;
-}
+import '@/styles/global.scss';
 
-const { title } = Astro.props;
+import SEOSchemaModel from 'schema-dts';
+import LayoutBody, {
+  type LayoutBodyProps,
+} from './components/body/LayoutBody.astro';
+import LayoutHead, {
+  type LayoutHeadProps,
+} from './components/head/LayoutHead.astro';
+import LayoutHeadSeo, {
+  type LayoutHeadSeoProps,
+} from './components/head/LayoutHeadSeo.astro';
+import LayoutHtml, {
+  type LayoutHtmlProps,
+} from './components/html/LayoutHtml.astro';
+import LayoutMain, {
+  type LayoutBodyMainProps,
+} from './components/body/LayoutBodyMain.astro';
+import LayoutHeadMeta, {
+  type LayoutHeadMetaProps,
+} from './components/head/LayoutHeadMeta.astro';
+import LayoutHeader from './fragments/header/LayoutHeader.astro';
+import LayoutDrawer from './fragments/drawer/LayoutDrawer.astro';
+import { ViewTransitions } from 'astro:transitions';
+import LayoutFooter from './fragments/footer/LayoutFooter.astro';
+
+export type { Props as LayoutProps };
+type Props<T extends SEOSchemaModel.Thing = SEOSchemaModel.Thing> = {
+  html?: LayoutHtmlProps;
+  head?: LayoutHeadProps;
+  meta?: LayoutHeadMetaProps;
+  seo?: LayoutHeadSeoProps<T>;
+  body?: LayoutBodyProps;
+  main?: LayoutBodyMainProps;
+  viewTransition?: Parameters<typeof ViewTransitions>[0];
+};
+
+const props = Astro.props;
+const slots = Astro.slots;
+
+const mainContentSlot =
+  (slots.has('main-content') && slots.render('main-content')) ||
+  (slots.has('default') && slots.render('default')) ||
+  null;
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
+<slot name="html">
+  <LayoutHtml {...props.html}>
+    <slot name="head">
+      <LayoutHead {...props.head}>
+        <LayoutHeadMeta />
+        <LayoutHeadSeo {...props.seo} />
+        <ViewTransitions {...props.viewTransition} />
+      </LayoutHead>
+    </slot>
+
+    <slot name="body">
+      <LayoutBody {...props.body}>
+        <slot name="header">
+          <LayoutHeader />
+        </slot>
+
+        <slot name="main">
+          {
+            mainContentSlot ? (
+              <LayoutMain {...props.main}>
+                <Fragment set:html={mainContentSlot} />
+              </LayoutMain>
+            ) : null
+          }
+        </slot>
+
+        <slot name="drawer">
+          <LayoutDrawer />
+        </slot>
+
+        <slot name="footer">
+          <LayoutFooter />
+        </slot>
+      </LayoutBody>
+    </slot>
+  </LayoutHtml>
+</slot>

@@ -1,0 +1,162 @@
+---
+import ItnavLogoSvg from '@/components/svg/ItnavLogoSvg.svelte';
+import FacebookLogoSvg from '@/components/svg/FacebookLogoSvg.svelte';
+import TwitterLogoSvg from '@/components/svg/TwitterLogoSvg.svelte';
+import { route } from '@/router';
+import LayoutHeaderDrawerTrigger from './LayoutHeaderDrawerTrigger.svelte';
+---
+
+<header class="header" transition:persist="layout-header">
+  <div class="view">
+    <a
+      class="itnav-logo-anchor"
+      href={route.top.path}
+      aria-label="トップページへ遷移"
+    >
+      <ItnavLogoSvg class="itnav-logo" role="img" aria-hidden="true" />
+    </a>
+
+    <div class="right-actions">
+      <LayoutHeaderDrawerTrigger client:idle />
+    </div>
+  </div>
+
+  <nav class="right-nav">
+    <a
+      class="external-link"
+      href={route.facebook.path}
+      aria-label="Facebookを開く"
+    >
+      <FacebookLogoSvg class="external-link-icon facebook" aria-hidden="true" />
+    </a>
+
+    <a
+      class="external-link"
+      href={route.twitter.path}
+      aria-label="Twitterを開く"
+    >
+      <TwitterLogoSvg class="external-link-icon twitter" aria-hidden="true" />
+    </a>
+  </nav>
+</header>
+
+<style scoped lang="scss">
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 24;
+    width: 100%;
+    pointer-events: none;
+    filter: invert(100%);
+    mix-blend-mode: exclusion;
+
+    @include pc {
+      height: 100%;
+      padding: 0;
+    }
+  }
+
+  .view {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+    padding-right: 8px;
+    padding-left: $page-outer-padding-mp-x + $page-inner-padding-mp-x;
+
+    @include pc {
+      height: 88px;
+      padding-right: 0;
+      padding-left: $page-outer-padding-pc-left;
+    }
+  }
+
+  .itnav-logo-anchor {
+    display: inline-flex;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .itnav-logo {
+    width: 100%;
+    height: 32px;
+
+    @include pc {
+      height: 40px;
+    }
+  }
+
+  @keyframes right-nav-slide {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @mixin right-nav-slide-animation {
+    @include pc {
+      // animation: transition(right-nav-slide, long2, standard);
+    }
+  }
+
+  .right-actions {
+    display: flex;
+    justify-content: center;
+    width: $page-outer-padding-pc-left;
+
+    @include right-nav-slide-animation;
+  }
+
+  .right-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    box-sizing: content-box;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: $page-outer-padding-pc-left;
+    height: 100%;
+    pointer-events: auto;
+    border-left: 2px solid $inverse-surface;
+
+    @include right-nav-slide-animation;
+
+    @include pc {
+      display: flex;
+    }
+  }
+
+  .external-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 32px;
+    color: $inverse-surface;
+    cursor: pointer;
+
+    &:hover {
+      .facebook {
+        fill: $facebook;
+      }
+
+      .twitter {
+        fill: $twitter;
+      }
+    }
+  }
+
+  .external-link-icon {
+    width: 24px;
+    height: 24px;
+    transition: transition(fill, short3, legacy);
+  }
+</style>

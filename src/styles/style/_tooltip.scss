@@ -1,0 +1,17 @@
+@use '../core' as *;
+
+.app-tooltip {
+  display: inline-block;
+  padding: 2px 16px 4px;
+  margin-right: 8px;
+  font-size: 14px;
+  color: currentColor;
+  border: 2px solid currentColor;
+  border-radius: 16px;
+}
+
+@include pc {
+  .app-tooltip {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,147 @@
+---
+import OutlinedButton from '@/components/button/OutlinedButton.astro';
+import ServiceHeading from './components/ServiceHeading.svelte';
+import { route } from '@/router';
+
+export type Props = {
+  id: string;
+};
+---
+
+<section class="section">
+  <ServiceHeading
+    client:visible
+    id={Astro.props.id}
+    h2Title="Development Business"
+    h3Title="開発事業"
+  />
+
+  <div class="top">
+    <p>
+      WEBサイト/WEBアプリケーションの受託開発、自社サービスの開発運用などを主に行っています。
+      <br />
+      他企業様が抱えている業務上の課題をシステム面でのサポートや、地域のためのWebサービスなども手掛けています。
+    </p>
+  </div>
+
+  <div class="info">
+    <ul class="info-list">
+      <li class="info-item">
+        <span class="info-title">開発言語</span>
+        <span>PHP / TypeScript / JavaScript / HTML / SCSS / CSS</span>
+      </li>
+      <li class="info-item">
+        <span class="info-title">ライブラリ</span>
+        <span>Vue.js / Express / TypeORM / WordPress / Laravel</span>
+      </li>
+      <li class="info-item">
+        <span class="info-title">インフラ</span>
+        <span>Amazon Web Services</span>
+      </li>
+      <li class="info-item">
+        <span class="info-title">使用ツール</span>
+        <span>GitLab / Slack / JIRA / Notion</span>
+      </li>
+    </ul>
+  </div>
+
+  <nav class="nav">
+    <OutlinedButton
+      tag="a"
+      class="nav-button"
+      href={route.contact.path}
+      aria-label="お問い合わせページを開く"
+    >
+      仕事の相談をする
+    </OutlinedButton>
+
+    <OutlinedButton
+      tag="a"
+      class="nav-button"
+      href={route.recruit.path}
+      aria-label="リクルートページを開く"
+    >
+      イトナブではたらく
+    </OutlinedButton>
+  </nav>
+</section>
+
+<style scoped lang="scss">
+  .section {
+    margin-bottom: 140px;
+  }
+
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .top-button {
+    margin-top: 16px;
+    margin-left: auto;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .info {
+    box-sizing: border-box;
+    padding: 32px 40px 32px 40px;
+    margin-bottom: 40px;
+    border-top: 4px solid $black;
+    border-bottom: 4px solid $black;
+  }
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px 0;
+    padding: 0;
+  }
+  .info-item {
+    margin-left: 1.4em;
+    line-height: 2;
+  }
+  .info-title {
+    display: block;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 24px 0;
+    margin-bottom: 64px;
+    color: $black;
+  }
+  .nav-button {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 24px;
+    font-size: 18px;
+  }
+
+  @include pc {
+    .section {
+      margin-bottom: 160px;
+    }
+
+    .info {
+      box-sizing: border-box;
+      padding: 26px 40px;
+    }
+    .info-list {
+      display: grid;
+      grid-template-rows: auto auto;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 72px;
+    }
+
+    .nav {
+      flex-direction: row;
+      gap: 0 48px;
+    }
+    .nav-button {
+      font-size: 22px;
+    }
+  }
+</style>

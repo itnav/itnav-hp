@@ -1,0 +1,109 @@
+@use 'sass:math';
+@forward 'sass:math';
+
+@use 'sass:map';
+@use 'sass:string';
+
+/// 文字列から数値を取得するためのマップ
+$number-map: (
+  '0': 0,
+  '1': 1,
+  '2': 2,
+  '3': 3,
+  '4': 4,
+  '5': 5,
+  '6': 6,
+  '7': 7,
+  '8': 8,
+  '9': 9,
+);
+
+/// 文字列を数値へ変換する
+///
+/// @param  {string} $string 数値に変換する文字列
+/// @return {number}         数値
+///
+/// @example
+/// ```scss
+/// .foo {
+///   property: number('40'); // => 40 (number)
+///   property: number('40px'); // => 40 (number)
+/// }
+/// ```
+@function number($string) {
+  $string: #{$string};
+  $length: string.length($string);
+
+  $result: 0;
+
+  $minus: false;
+  $decimal: null;
+
+  $i: 1;
+  @while $i < $length {
+    $char: string.slice($string, $i, $i);
+
+    // マイナスの文字が取得できた時
+    @if $char == '-' {
+      $minus: true;
+
+      // 小数点だったとき
+    } @else if $char == '.' {
+      $decimal: 1;
+
+      // その他の場合
+    } @else {
+      $number: map.get($number-map, $char);
+
+      @if $number {
+        $result: ($result * 10) + $number;
+
+        // 浮遊小数点である場合、最後に小数点をずらすために値を保存しておく
+        @if $decimal {
+          $decimal: $decimal * 10;
+        }
+
+        // 数字以外を取得した場合、ループ処理を終了する
+      } @else {
+        // 処理を中断
+        $i: $length;
+      }
+    }
+
+    $i: $i + 1;
+  }
+
+  // 小数点の調整
+  $result: if($decimal, math.div($result, $decimal), $result);
+
+  // マイナスの調節
+  @return if($minus, -($result), $result);
+}
+
+/// 文字列の unit から数値を取得するためのマップ
+$unit-number-map: (
+  vw: 0vw,
+  vh: 0vh,
+  vmin: 0vmin,
+  vmax: 0vmax,
+  px: 0px,
+  rem: 0rem,
+  em: 0em,
+) !default;
+
+/// 文字列の unit から数値を取得する
+///
+/// @param  {string}  $unit 単位
+/// @return {number?}       単位に付属される数値 (default: 0)
+///
+/// @example
+/// ```scss
+/// .foo {
+///   property: unit-number('40px'); // => 40 (number)
+///   property: unit-number('40rem'); // => 40 (number)
+/// }
+/// ```
+@function unit-number($unit, $value: 0) {
+  $unit: string.unquote($unit);
+  @return (map.get($unit-number-map, $unit) or 0) + $value;
+}

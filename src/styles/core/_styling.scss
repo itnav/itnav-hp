@@ -1,0 +1,47 @@
+/// スクロールバーを非表示にする
+///
+/// @example
+/// ```scss
+/// .foo {
+///   @include disable-scrollbar;
+/// }
+/// ```
+@mixin disable-scrollbar() {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/// リンクの余白を調整する
+///
+/// @param {number} $px 余白の値
+///
+/// @example
+/// ```scss
+/// .foo {
+///   @include anchor-link-margin(10px);
+/// }
+/// ```
+@mixin anchor-link-margin($px) {
+  padding-top: $px;
+  margin-top: -$px;
+}
+
+/// テキストに影をつける
+///
+/// @param {number} $px    影の大きさ
+/// @param {color}  $color 影の色
+///
+/// @example
+/// ```scss
+/// .foo {
+///   @include text-shadow(2px, #000);
+/// }
+/// ```
+@mixin text-shadow($px, $color) {
+  text-shadow: $px $px 0 $color, (-$px) $px 0 $color, $px (-$px) 0 $color,
+    (-$px) (-$px) 0 $color;
+}

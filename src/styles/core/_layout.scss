@@ -1,0 +1,31 @@
+@use 'sass:map';
+
+// outer
+$page-outer-padding-mp-x: 16px;
+$page-outer-padding-pc-left: 64px;
+$page-outer-padding-pc-right: $page-outer-padding-pc-left * 2;
+
+// inner
+$page-inner-padding-mp-x: 16px;
+$page-inner-padding-pc-x: 0;
+
+// outer + inner
+$page-padding-mp-x: $page-outer-padding-mp-x + $page-inner-padding-mp-x;
+$page-padding-pc-left: $page-outer-padding-pc-left + $page-inner-padding-pc-x; // prettier-ignore
+$page-padding-pc-right: $page-outer-padding-pc-right + $page-inner-padding-pc-x;
+
+/// XD などのデザインをもとにした幅のマップ
+$design-width-map: (
+  max: 1440px,
+  pc: 1280px,
+  mp: 360px,
+  min: 360px,
+) !default;
+
+/// デザイン幅を取得する
+///
+/// @param  {string} $key デザイン幅のキー
+/// @return {number}      デザイン幅
+@function design-width($key) {
+  @return map.get($design-width-map, $key);
+}

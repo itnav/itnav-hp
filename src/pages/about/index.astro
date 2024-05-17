@@ -1,0 +1,32 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import About1Heading from './_/About1Heading.svelte';
+import About2MissionSection from './_/About2MissionSection.astro';
+import About3VisionSection from './_/About3VisionSection.astro';
+import About4ValueSection from './_/About4ValueSection.astro';
+import About5MessageSection from './_/About5MessageSection.astro';
+import About6CompanyProfileSection from './_/About6CompanyProfileSection.astro';
+---
+
+<Layout
+  seo={{
+    title: 'ABOUT | 株式会社イトナブ',
+    description:
+      'イトナブのMISSION、VISION、VALUE、イトナブ代表取締役 古山隆幸からのメッセージ、会社概要に関する詳しい情報を紹介しています',
+  }}
+  main={{
+    class: 'app-page-padding-y',
+  }}
+>
+  <About1Heading client:visible />
+
+  <About2MissionSection />
+
+  <About3VisionSection />
+
+  <About4ValueSection />
+
+  <About5MessageSection />
+
+  <About6CompanyProfileSection />
+</Layout>

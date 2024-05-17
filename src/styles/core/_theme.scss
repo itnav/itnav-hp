@@ -1,0 +1,52 @@
+/// @see https://m3.material.io/theme-builder#/custom
+$schema: light;
+$source: #3e9f78;
+
+$white: #fdfdfd;
+$black: #222;
+
+$primary: #3e9f78;
+$on-primary: $white;
+// $primary-container: #89f8c6;
+// $on-primary-container: #002114;
+
+$secondary: #4d6357;
+$on-secondary: $white;
+// $secondary-container: #cfe9d9;
+// $on-secondary-container: #0a1f16;
+
+$tertiary: #3d6373;
+$on-tertiary: $white;
+// $tertiary-container: #c1e9fb;
+// $on-tertiary-container: #001f29;
+
+$accent: #8d8d8d;
+$on-accent: $white;
+// $accent-container: #d8d8d8;
+// $on-accent-container: #000000;
+
+$error: #f44336;
+$on-error: $white;
+// $error-container: #ffdad6;
+// $on-error-container: #410002;
+
+$background: $white;
+$on-background: $black;
+
+$surface: $white;
+$on-surface: $black;
+
+$surface-variant: #8f998c;
+$on-surface-variant: #404040;
+
+$outline: #707973;
+$outline-variant: #bfc9c1;
+
+$inverse-primary: #6cdbab;
+$inverse-background: $black;
+$inverse-surface: $black;
+$inverse-on-surface: $white;
+
+$shadow: #000000;
+$surface-tint: #006c4c;
+$scrim: #000000;

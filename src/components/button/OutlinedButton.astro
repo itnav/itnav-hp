@@ -1,0 +1,114 @@
+---
+import { mergeCssProperty } from '@/utils/css';
+import ExternalLinkIconSvg from '../svg/ExternalLinkIconSvg.svelte';
+import InternalLinkIconSvg from '../svg/InternalLinkIconSvg.svelte';
+
+export type { Props as OutlinedButtonProps };
+type Props<T extends astroHTML.JSX.Tags = astroHTML.JSX.Tags> =
+  astroHTML.JSX.Attributes<T> & {
+    tag: T;
+    suffix?: 'external' | 'internal' | null;
+  };
+
+const { tag: Tag = 'button' as any, suffix, ...attrs } = Astro.props;
+
+const href: string | undefined = (attrs as any)?.href;
+
+const suffixValue: typeof suffix =
+  suffix || suffix === null
+    ? null
+    : href
+      ? href.startsWith('http')
+        ? 'external'
+        : 'internal'
+      : void 0;
+---
+
+<Tag {...attrs} class={mergeCssProperty('outlined-button', attrs.class)}>
+  <slot />
+
+  <div class="suffix">
+    {
+      suffixValue === 'internal' ? (
+        <InternalLinkIconSvg class="suffix-internal-icon" />
+      ) : suffixValue === 'external' ? (
+        <ExternalLinkIconSvg class="suffix-external-icon" />
+      ) : (
+        void 0
+      )
+    }
+  </div>
+</Tag>
+
+<style lang="scss" scoped>
+  .outlined-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 32px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border: 2px solid currentColor;
+
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      content: '';
+      mix-blend-mode: difference;
+    }
+
+    &:hover:after {
+      background-color: currentColor;
+      animation: transition(wave-across-left-to-right, long5, emphasized);
+      animation-fill-mode: both;
+    }
+
+    @include pc {
+      padding: 40px 104px;
+      font-size: 16px;
+    }
+  }
+
+  .suffix {
+    display: flex;
+    margin-left: auto;
+
+    @include pc {
+      margin-left: 12px;
+    }
+  }
+
+  .suffix-internal-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+
+    @include pc {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .suffix-external-icon {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    fill: currentColor;
+
+    @include pc {
+      width: 26px;
+      height: 26px;
+      margin-top: 3px;
+    }
+  }
+</style>

@@ -1,0 +1,68 @@
+---
+import { route } from '@/router';
+import MissionHeading from '@/components/heading/MissionHeading.svelte';
+import UnderlinedButton from '@/components/button/UnderlinedButton.astro';
+import Top2OurMissionSectionHeading from './Top2OurMissionSectionHeading.svelte';
+import Top2OurMissionSectionDescription from './Top2OurMissionSectionDescription.svelte';
+---
+
+<section class="section app-page-padding-x app-limit-design-width">
+  <Top2OurMissionSectionHeading client:visible />
+
+  <MissionHeading client:visible />
+
+  <div class="content">
+    <div class="description">
+      <Top2OurMissionSectionDescription client:visible />
+    </div>
+
+    <UnderlinedButton
+      tag="a"
+      class="about-link"
+      href={route.about.path}
+      aria-label="About Pageへ遷移する"
+    >
+      About
+    </UnderlinedButton>
+  </div>
+</section>
+
+<style scoped lang="scss">
+  .section {
+		width: 100%;
+    margin-bottom: 72px;
+
+    @include pc {
+      margin-bottom: 160px;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include pc {
+      flex-direction: row;
+      align-items: flex-end;
+    }
+  }
+
+  .description {
+    flex-grow: 1;
+    margin-bottom: 48px;
+    line-height: 2;
+
+    @include pc {
+      max-width: 640px;
+      margin-right: 24px;
+      margin-bottom: 0;
+      font-size: 24px;
+      line-height: 2.4;
+    }
+  }
+
+  .about-link {
+    margin-left: auto;
+  }
+</style>

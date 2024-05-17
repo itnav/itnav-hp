@@ -1,0 +1,38 @@
+---
+import { SEO } from 'astro-seo';
+import type { Props as SEOProps } from 'astro-seo';
+import { Schema as SEOSchema } from 'astro-seo-schema';
+import type SEOSchemaModel from 'schema-dts';
+
+export type { Props as LayoutHeadSeoProps };
+type Props<T extends SEOSchemaModel.Thing> = SEOProps & {
+  schema?: (T | Omit<SEOSchemaModel.Graph, '@context'>) & {
+    '@context'?: SEOSchemaModel.Graph['@context'];
+  };
+  schemaSpace?: string | number;
+};
+
+const {
+  schema: seoSchema,
+  schemaSpace: seoSchemaSpace,
+  ...seoProps
+} = Astro.props as Props<SEOSchemaModel.Thing>;
+
+// @context の自動入力
+if (seoSchema) {
+  seoSchema['@context'] = 'https://schema.org';
+}
+
+seoProps.titleDefault ||= '株式会社イトナブ';
+seoProps.titleTemplate ||= '%s | イトナブ';
+---
+
+<SEO {...seoProps} />
+{
+  seoSchema && (
+    <SEOSchema
+      item={seoSchema as SEOSchemaModel.Graph}
+      space={seoSchemaSpace}
+    />
+  )
+}

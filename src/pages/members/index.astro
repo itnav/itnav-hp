@@ -1,0 +1,333 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import MemberContainer from './_/MemberContainer.svelte';
+import AChanSvg from './_/svg/a-chan.svg?raw';
+import AdorSvg from './_/svg/ador.svg?raw';
+import AinaiSvg from './_/svg/ainai.svg?raw';
+import AshSvg from './_/svg/ash.svg?raw';
+import BankSvg from './_/svg/bank.svg?raw';
+import BeckSvg from './_/svg/beck.svg?raw';
+import CookSvg from './_/svg/cook.svg?raw';
+import DanNeSanSvg from './_/svg/dan-ne-san.svg?raw';
+import FuruyamaSvg from './_/svg/furuyama.svg?raw';
+import GakuSvg from './_/svg/gaku.svg?raw';
+import GenkiSvg from './_/svg/genki.svg?raw';
+import GohhoSvg from './_/svg/gohho.svg?raw';
+import GuraSvg from './_/svg/gura.svg?raw';
+import HinodeSvg from './_/svg/hinode.svg?raw';
+import KuboSvg from './_/svg/kubo.svg?raw';
+import KurosawaSvg from './_/svg/kurosawa.svg?raw';
+import KyuChanSvg from './_/svg/kyu-chan.svg?raw';
+import LeafSvg from './_/svg/leaf.svg?raw';
+import MatoiSvg from './_/svg/matoi.svg?raw';
+import OzakiSvg from './_/svg/ozaki.svg?raw';
+import PenSvg from './_/svg/pen.svg?raw';
+import PoseSvg from './_/svg/pose.svg?raw';
+import RenRenSvg from './_/svg/renren.svg?raw';
+import RohanSvg from './_/svg/rohan.svg?raw';
+import SansanSvg from './_/svg/sansan.svg?raw';
+import ShigureSvg from './_/svg/shigure.svg?raw';
+import TakanaSvg from './_/svg/takana.svg?raw';
+import TamaSvg from './_/svg/tama.svg?raw';
+import YottuSvg from './_/svg/yottu.svg?raw';
+import YuzaSvg from './_/svg/yuza.svg?raw';
+import ZackSvg from './_/svg/zack.svg?raw';
+
+interface Member {
+  nickname: string;
+  name: string;
+  role: string;
+  svg: string;
+}
+
+const members = [
+  {
+    nickname: 'ふるやま',
+    name: '古山 隆幸',
+    role: 'CEO',
+    svg: FuruyamaSvg,
+  },
+  {
+    nickname: '黒沢',
+    name: '黒沢 高',
+    role: 'GTO',
+    svg: KurosawaSvg,
+  },
+  {
+    nickname: '尾崎',
+    name: '尾崎 健一',
+    role: '取締役',
+    svg: OzakiSvg,
+  },
+  {
+    nickname: '久保',
+    name: '久保 昇也',
+    role: 'CTO',
+    svg: KuboSvg,
+  },
+  {
+    nickname: '日の出',
+    name: '武山 将己',
+    role: '教育部 部長',
+    svg: HinodeSvg,
+  },
+  {
+    nickname: 'ガク',
+    name: '菅原 大樹',
+    role: '開発部 部長',
+    svg: GakuSvg,
+  },
+  {
+    nickname: 'まとい',
+    name: '香月 昴飛',
+    role: 'BX事業部 部長',
+    svg: MatoiSvg,
+  },
+  {
+    nickname: '高菜',
+    name: '遠藤 匠',
+    role: '開発部',
+    svg: TakanaSvg,
+  },
+  {
+    nickname: 'Pen',
+    name: '菅原 洋介',
+    role: 'ソーシャル',
+    svg: PenSvg,
+  },
+  {
+    nickname: 'たま',
+    name: '金光 沙織',
+    role: '広報',
+    svg: TamaSvg,
+  },
+  {
+    nickname: 'よっつ',
+    name: '金光 宏',
+    role: '教育部',
+    svg: YottuSvg,
+  },
+  {
+    nickname: 'さんさん',
+    name: '佐々木 翼',
+    role: '教育部',
+    svg: SansanSvg,
+  },
+  {
+    nickname: 'だん姉',
+    name: '嶋脇 久恵',
+    role: '経理部 / 総務',
+    svg: DanNeSanSvg,
+  },
+  {
+    nickname: 'あいない',
+    name: '相内 真由美',
+    role: '経理部 / 総務',
+    svg: AinaiSvg,
+  },
+  {
+    nickname: 'げんき',
+    name: '阿部 海飛',
+    role: '開発部',
+    svg: GenkiSvg,
+  },
+  {
+    nickname: 'ポセ',
+    name: '菊地 拓也',
+    role: '開発部',
+    svg: PoseSvg,
+  },
+  {
+    nickname: 'リーフ',
+    name: '杉本 洸柊',
+    role: '開発部',
+    svg: LeafSvg,
+  },
+  {
+    nickname: 'れんれん',
+    name: '八重樫 蓮',
+    role: '教育部',
+    svg: RenRenSvg,
+  },
+
+  {
+    nickname: 'きゅうちゃん',
+    name: '村上 柚香',
+    role: '開発部',
+    svg: KyuChanSvg,
+  },
+  {
+    nickname: 'あっしゅ',
+    name: '佐々木 栞',
+    role: '開発部',
+    svg: AshSvg,
+  },
+  {
+    nickname: 'ユーザ',
+    name: '伊藤 啓大',
+    role: '開発部',
+    svg: YuzaSvg,
+  },
+  {
+    nickname: 'ぐら',
+    name: '三浦 純平',
+    role: '開発部',
+    svg: GuraSvg,
+  },
+  {
+    nickname: 'シグレ',
+    name: '木村 真人',
+    role: '開発部',
+    svg: ShigureSvg,
+  },
+  {
+    nickname: 'バンク',
+    name: '阿部 太一',
+    role: '教育部 / BX事業部',
+    svg: BankSvg,
+  },
+  {
+    nickname: 'アドル',
+    name: '内海秀太',
+    role: 'BX事業部',
+    svg: AdorSvg,
+  },
+  {
+    nickname: 'ろはん',
+    name: '成田 開生',
+    role: 'BX事業部',
+    svg: RohanSvg,
+  },
+  {
+    nickname: 'ベック',
+    name: 'おおぬま こうた',
+    role: 'BX事業部',
+    svg: BeckSvg,
+  },
+  {
+    nickname: 'ゴッホ',
+    name: '佐可野 瞬大',
+    role: 'BX事業部',
+    svg: GohhoSvg,
+  },
+  {
+    nickname: 'ザック',
+    name: '佐藤 健太',
+    role: 'BX事業部',
+    svg: ZackSvg,
+  },
+  {
+    nickname: 'あーちゃん',
+    name: '渥美 優花',
+    role: 'BX事業部',
+    svg: AChanSvg,
+  },
+  {
+    nickname: 'クック',
+    name: '須藤 大斗',
+    role: '教育部',
+    svg: CookSvg,
+  },
+] satisfies Readonly<Member[]>;
+---
+
+<Layout
+  seo={{
+    title: 'MEMBER | 株式会社イトナブ',
+    description:
+      'イトナブ所属メンバーの紹介ページです。イトナブ代表取締役 古山隆幸を中心に個性豊かなイトナブメンバーたちのプロフィールがご覧いただけます。',
+  }}
+  main={{
+    class: 'main app-page-padding-y app-page-padding-x app-limit-design-width',
+  }}
+>
+  <h1 class="h1">
+    <span class="app-sub-h1 h1-1">I</span>
+    <span class="app-sub-h1 h1-2">T</span>
+    <span class="app-sub-h1 h1-3">N</span>
+    <span class="app-sub-h1 h1-4">A</span>
+    <span class="app-sub-h1 h1-5">V</span>
+    <span class="app-sub-h1 h1-6">'</span>
+    <span class="app-sub-h1 h1-7">s</span>
+
+    <br />
+
+    <span class="app-h1 h1-1">M</span>
+    <span class="app-h1 h1-2">E</span>
+    <span class="app-h1 h1-3">M</span>
+    <span class="app-h1 h1-4">B</span>
+    <span class="app-h1 h1-5">E</span>
+    <span class="app-h1 h1-6">R</span>
+  </h1>
+
+  <div class="members">
+    {
+      members.map((member) => (
+        <MemberContainer client:visible>
+          <Fragment set:html={member.svg} />
+          <span class="nickname">{member.nickname}</span>
+          <div class="role">{member.role}</div>
+        </MemberContainer>
+      ))
+    }
+  </div>
+</Layout>
+
+<style scoped lang="scss">
+  :global(.main) {
+    width: 100%;
+  }
+
+  .h1 {
+    margin-bottom: 80px;
+  }
+
+  .app-sub-h1,
+  .app-h1 {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    transform-origin: bottom;
+    animation: transition(none, long2, ease-out);
+    animation-fill-mode: both;
+    animation-name: fade-up;
+
+    // :global(.visible) & {
+    //   animation-name: fade-up;
+    // }
+  }
+
+  @for $i from 1 through 7 {
+    .h1-#{$i} {
+      animation-delay: 80ms * $i;
+    }
+  }
+
+  .members {
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 64px;
+
+    :global(.svg) {
+      aspect-ratio: 1;
+      opacity: 0.6;
+    }
+  }
+
+  .nickname {
+    display: block;
+    margin: 8px 0;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .role {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: black;
+    text-align: center;
+  }
+</style>

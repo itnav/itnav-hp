@@ -1,0 +1,138 @@
+---
+import { route } from '@/router';
+import OutlinedButton from '@/components/button/OutlinedButton.astro';
+import LayoutDrawerContainer from './LayoutDrawerContainer.svelte';
+
+const LINKS = [
+  { href: route.top.path, text: 'TOP' },
+  { href: route.about.path, text: 'ABOUT' },
+  { href: route.services.path, text: 'SERVICE' },
+  { href: route.members.path, text: 'MEMBERS' },
+  { href: route.blogs.path, text: 'NEWS&REPORTS' },
+] as const;
+---
+
+<div transition:persist="layout-drawer">
+  <LayoutDrawerContainer client:only="svelte">
+    <nav class="nav app-page-padding-x">
+      <div class="left-links">
+        <OutlinedButton tag="a" href={route.recruit.path}
+          >RECRUIT</OutlinedButton
+        >
+        <OutlinedButton tag="a" href={route.contact.path}
+          >CONTACT</OutlinedButton
+        >
+      </div>
+
+      <div class="right-links">
+        {
+          LINKS.map(({ href, text }, i) => (
+            <a
+              href={href}
+              class={`right-link right-link-${i + 1} app-wave-across-animation`}
+              data-astro-history="replace"
+            >
+              {text}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+
+    <a href={route.privacy.path} class="privacy-policy">Privacy Policy</a>
+  </LayoutDrawerContainer>
+</div>
+
+<style scoped lang="scss">
+  .nav {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    height: 100%;
+    padding: 0;
+    margin-bottom: 24px;
+
+    @include pc {
+      flex-grow: 1;
+    }
+  }
+
+  .left-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 24px;
+
+    @include pc {
+      align-items: stretch;
+      width: auto;
+      margin-right: 24px;
+    }
+  }
+
+  .right-links {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @include pc {
+      gap: 16px;
+      align-items: flex-end;
+    }
+  }
+
+  .right-link {
+    margin-right: auto;
+    margin-bottom: 24px;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 2.4px;
+    transition: transition(color, medium2, standard);
+    animation-duration: transition-duration(long4) !important;
+
+    &:hover {
+      color: $primary;
+    }
+
+    @include pc {
+      margin-right: 0;
+      margin-bottom: 0;
+      font-size: 72px;
+    }
+
+    &::after {
+      background-color: $inverse-on-surface;
+      animation-duration: transition-duration(long4) !important;
+
+      @include pc {
+        animation-direction: reverse;
+      }
+    }
+  }
+
+  @for $i from 0 through 4 {
+    .right-link-#{$i + 1},
+    .right-link-#{$i + 1}::after {
+      animation-delay: 80ms * $i;
+    }
+  }
+
+  .privacy-policy {
+    flex-shrink: 0;
+    align-self: flex-start;
+    color: $surface-variant;
+    color: #fdfdfd99;
+    text-decoration: none;
+    transition: transition(color, medium2, standard);
+
+    &:hover {
+      color: $primary;
+    }
+  }
+</style>

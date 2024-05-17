@@ -1,0 +1,22 @@
+---
+import { Head } from 'astro-capo';
+
+export type { Props as LayoutHeadProps };
+type Props = astroHTML.JSX.Attributes<'head'> & {
+  sort?: boolean;
+};
+
+const { sort, ...attrs } = Astro.props;
+---
+
+{
+  sort ? (
+    <Head {...attrs}>
+      <slot />
+    </Head>
+  ) : (
+    <head {...attrs}>
+      <slot />
+    </head>
+  )
+}

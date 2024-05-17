@@ -1,0 +1,155 @@
+@use '../core' as *;
+
+// // 画像スライドアニメーション
+// .app-img-slide {
+//   position: relative;
+//   overflow: hidden;
+//   &::before {
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//     bottom: 0;
+//     left: 0;
+//     z-index: 1;
+//     content: '';
+//     background-color: #222;
+//     -webkit-animation-name: bg-img-fade-anime;
+//     animation-name: bg-img-fade-anime;
+//     -webkit-animation-duration: 720ms;
+//     animation-duration: 720ms;
+//     -webkit-animation-fill-mode: forwards;
+//     animation-fill-mode: forwards;
+//   }
+// }
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes r360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  99.9%,
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes r-r360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  99.9%,
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.app-typing-animation {
+  position: relative;
+  visibility: hidden;
+}
+
+%app-wave-across-animation-core {
+  animation-duration: transition-duration(extra-long2);
+  animation-timing-function: transition-easing(emphasized);
+}
+
+%app-wave-across-left-to-right-animation {
+  animation-name: wave-across-left-to-right;
+  animation-fill-mode: both;
+}
+@keyframes wave-across-left-to-right {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  48% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+}
+
+%app-wave-across-with-hidden-text-animation {
+  animation-name: wave-across-with-hidden-text;
+  animation-fill-mode: both;
+}
+@keyframes wave-across-with-hidden-text {
+  0% {
+    visibility: hidden;
+  }
+  48% {
+    visibility: hidden;
+  }
+  50% {
+    visibility: visible;
+  }
+  100% {
+    visibility: visible;
+  }
+}
+
+@keyframes wave-across-with-hidden-content {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  50.0001% {
+    opacity: 1;
+  }
+}
+
+.app-wave-across-animation,
+.app-wave-across-animation-on-visible {
+  position: relative;
+  display: inline-block;
+  visibility: hidden;
+  @extend %app-wave-across-animation-core;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    visibility: visible;
+    content: '';
+    background-color: currentColor;
+    transform: scaleX(0);
+    @extend %app-wave-across-animation-core;
+  }
+}
+
+.app-wave-across-animation,
+.visible.app-wave-across-animation-on-visible,
+.visible .app-wave-across-animation-on-visible {
+  @extend %app-wave-across-with-hidden-text-animation;
+
+  &::after {
+    @extend %app-wave-across-left-to-right-animation;
+  }
+}

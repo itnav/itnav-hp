@@ -1,0 +1,48 @@
+---
+import { route } from '@/router';
+import UnderlinedButton from '@/components/button/UnderlinedButton.astro';
+import Top5BlogsSectionTable from './Top5BlogsSectionTable.svelte';
+---
+
+<section class="section app-page-outer-padding-x app-limit-design-width">
+  <h2 class="h2 app-h2">NEWS&REPORT</h2>
+
+  <div class="content">
+    <Top5BlogsSectionTable client:visible />
+
+    <UnderlinedButton
+      tag="a"
+      href={route.blogs.path}
+      aria-label="Blog 一覧ページへ遷移"
+      class="app-underlined-button"
+    >
+      View all
+    </UnderlinedButton>
+  </div>
+</section>
+
+<style scoped lang="scss">
+  .section {
+    width: 100%;
+    margin-bottom: 120px;
+  }
+
+  .content {
+    text-align: right;
+  }
+
+  .h2 {
+    margin-bottom: 24px;
+    letter-spacing: 2.4px;
+  }
+
+  @include pc {
+    .section {
+      margin-bottom: 160px;
+    }
+
+    .h2 {
+      margin-bottom: 64px;
+    }
+  }
+</style>

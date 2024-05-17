@@ -1,0 +1,150 @@
+---
+import { route } from '@/router';
+import BaseMaintenancePngPath from './images/service-base-maintenance.png?url';
+import BreedingPngPath from './images/service-breeding.png?url';
+import InteractionPngPath from './images/service-interaction.png?url';
+import LecturePartyPngPath from './images/service-lecture-party.png?url';
+import MaterialDevelopmentPngPath from './images/service-material-development.png?url';
+import SupportPngPath from './images/service-support.png?url';
+import Service3EducationalProjectsProject from './Service3EducationalProjectsProject.svelte';
+import OutlinedButton from '@/components/button/OutlinedButton.astro';
+import ServiceHeading from './components/ServiceHeading.svelte';
+
+export type Props = {
+  id: string;
+};
+
+interface Service {
+  thumbnail: string;
+  title: string;
+  description: string;
+}
+
+const SERVICES = [
+  {
+    thumbnail: BreedingPngPath,
+    title: '若手プログラミング人材育成事業',
+    description:
+      '小学生から大学生を対象に、自治体と連携し、地域の若者たちにプログラミングを学んでもらい、将来学んで技術で活躍できる人材に育成する事業',
+  },
+
+  {
+    thumbnail: BaseMaintenancePngPath,
+    title: '人材育成拠点整備事業',
+    description:
+      '技術を学んでいる学生たちが集まれる拠点を整備し、新しい仲間たちと出会え、新しい技術に触れ合える場所を整備する事業',
+  },
+
+  {
+    thumbnail: InteractionPngPath,
+    title: '人材マッチング事業・人材交流事業',
+    description:
+      '技術を学んでいる学生と、技術者を必要としている会社をマッチング・交流する事業',
+  },
+
+  {
+    thumbnail: SupportPngPath,
+    title: 'GIGAスクールサポート事業',
+    description:
+      'GIGAスクール構想にて、小学校・中学校に提供されるPCの利用方法やマニュアル作成・教師へのサポートなどを実施する事業',
+  },
+
+  {
+    thumbnail: LecturePartyPngPath,
+    title: '講演会等',
+    description:
+      '地域IT人材育成や地方創生などプログラミング人材育成を主軸なテーマにて講演会を実施。小学校〜大学でのキャリアセミナーなども行っている',
+  },
+
+  {
+    thumbnail: MaterialDevelopmentPngPath,
+    title: '教材開発事業',
+    description: '企画研修など教育教材の開発を実施中',
+  },
+] as const satisfies Service[];
+
+function getNumber(index: number) {
+  return ('00' + (index + 1)).slice(-2);
+}
+---
+
+<section class="section">
+  <ServiceHeading
+    client:visible
+    id={Astro.props.id}
+    h2Title="Educational Project"
+    h3Title="教育事業"
+  />
+
+  <div class="projects">
+    {
+      SERVICES.map((service, i) => (
+        <Service3EducationalProjectsProject
+          client:visible
+          number={getNumber(i)}
+          thumbnail={service.thumbnail}
+          title={service.title}
+          description={service.description}
+        />
+      ))
+    }
+  </div>
+
+  <OutlinedButton
+    tag="a"
+    class="bottom-button"
+    href={route.contact.path}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    教育事業について相談する
+  </OutlinedButton>
+</section>
+
+<style scoped lang="scss">
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 96px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .bottom-button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 24px;
+    font-size: 18px;
+
+    text-align: left;
+    border: 2px solid $black;
+  }
+
+  .bottom-button .icon {
+    margin-left: 28px;
+  }
+
+  @include pc {
+    .section {
+      margin-bottom: 160px;
+    }
+
+    .projects {
+      margin-bottom: 120px;
+    }
+
+    .bottom-button {
+      box-sizing: border-box;
+      padding: 48px 0;
+      font-size: 22px;
+      text-align: center;
+    }
+  }
+</style>

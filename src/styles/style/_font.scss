@@ -1,0 +1,14 @@
+@use '../core' as *;
+
+// Japanese & English font
+@include noto-sans-jp-faces();
+@include roboto-faces();
+:root {
+  font-family: $font-family-jp, $font-family-en, sans-serif;
+}
+
+// Mono font
+@include roboto-mono-faces();
+code {
+  font-family: $font-family-mono, monospace;
+}

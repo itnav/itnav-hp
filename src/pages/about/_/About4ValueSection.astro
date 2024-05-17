@@ -1,0 +1,143 @@
+---
+import About4ValueSectionContentContainer from './About4ValueSectionContentContainer.svelte';
+---
+
+<svelte:options immutable={true}></svelte:options>
+
+<section class="section app-limit-design-width">
+  <h2 class="h2 app-h2 app-page-padding-x">VALUE</h2>
+
+  <About4ValueSectionContentContainer client:visible>
+    <div class="content content-1">
+      <h3 class="h3">
+        01. TECH<br />
+        新しい技術を常に追い求める
+      </h3>
+      <p class="p">
+        日々進化する情報技術に敏感になり、
+        <wbr class="app-pc-only" />
+        新しい技術を取り入れ、
+        <wbr class="app-pc-only" />
+        自分のパフォーマンスを上げ続ける人間であれ。
+      </p>
+    </div>
+
+    <div class="content content-2">
+      <h3 class="h3">
+        02. TRY AND CHALLENGE
+        <br />
+        新しいことに挑み続ける
+      </h3>
+      <p class="p">
+        大きな壁や失敗を恐れず、
+        <br class="app-pc-only" />
+        何事もチャレンジできる人間であれ。
+      </p>
+    </div>
+
+    <div class="content content-3">
+      <h3 class="h3">
+        03. NOTICE
+        <br />
+        気づきを大切にする
+      </h3>
+      <p class="p">
+        仲間が困っていることに気づき、
+        <wbr class="app-pc-only" />
+        ともに悩み、
+        <wbr class="app-pc-only" />
+        問題を解決できる人間であれ。
+      </p>
+    </div>
+
+    <div class="content content-4">
+      <h3 class="h3">
+        04. GIVE
+        <br />
+        提供者になれる自分であれ
+      </h3>
+      <p class="p">
+        これまで出会った人から学びがあったからこそ、
+        <wbr class="app-pc-only" />
+        今の自分がいる。
+        <wbr class="app-pc-only" />
+        だからこそ、
+        <wbr class="app-pc-only" />
+        学んだ事を継承し、
+        <wbr class="app-pc-only" />
+        未来を創造できる人間であれ。
+      </p>
+    </div>
+  </About4ValueSectionContentContainer>
+</section>
+
+<style scoped lang="scss">
+  .section {
+    box-sizing: border-box;
+    margin-bottom: 96px;
+  }
+
+  .h2 {
+    margin-bottom: 16px;
+  }
+
+  .content {
+    padding: 40px $page-padding-mp-x;
+    border-bottom: 1px solid $black;
+    opacity: 0;
+  }
+
+  :global(.visible) {
+    .content-1 {
+      animation: fade-in 2s ease 800ms forwards;
+    }
+    .content-2 {
+      animation: fade-in 1.5s ease 700ms forwards;
+    }
+    .content-3 {
+      animation: fade-in 1s ease 600ms forwards;
+    }
+    .content-4 {
+      animation: fade-in 0.5s ease 500ms forwards;
+    }
+  }
+
+  .h3 {
+    margin-bottom: 12px;
+    font-family: $font-family-mono;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  @include pc {
+    .h2 {
+      padding: 0;
+      margin-bottom: 24px;
+    }
+
+    .section {
+      padding-right: $page-padding-pc-right;
+      padding-left: $page-padding-pc-left;
+      margin-bottom: 160px;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 24px;
+    }
+
+    .h3 {
+      flex-shrink: 0;
+      margin-bottom: 0;
+      font-size: 28px;
+      white-space: nowrap;
+    }
+
+    .p {
+      word-break: keep-all;
+      white-space: normal;
+    }
+  }
+</style>

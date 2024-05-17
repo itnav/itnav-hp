@@ -1,0 +1,119 @@
+<section class="app-page-padding-x app-limit-design-width">
+  <h2 class="h2 app-h2">COMPANY PROFILE</h2>
+  <table class="table">
+    <tbody>
+      <tr class="tr">
+        <th class="th">会社名</th>
+        <td class="td">株式会社イトナブ</td>
+      </tr>
+
+      <tr class="tr">
+        <th class="th">代表</th>
+        <td class="td">古山 隆幸</td>
+      </tr>
+
+      <tr class="tr">
+        <th class="th">所在地</th>
+        <td class="td">
+          <span>＜石巻オフィス＞</span>
+          <p class="p">宮城県石巻市大街道北1-1-16 かじやビル2階</p>
+
+          <span>＜横須賀LAB＞</span>
+          <p class="p">神奈川県横須賀市安浦町2丁目11</p>
+        </td>
+      </tr>
+
+      <tr class="tr">
+        <th class="th">設立</th>
+        <td class="td">2015年6月24日</td>
+      </tr>
+
+      <tr class="tr">
+        <th class="th">資本金</th>
+        <td class="td">18,100,000円</td>
+      </tr>
+
+      <tr class="tr">
+        <th class="th">従業員数</th>
+        <td class="td">24名（ パート・アルバイト含む ）</td>
+      </tr>
+
+      <tr class="tr">
+        <th class="th">事業内容</th>
+        <td class="td">
+          <strong class="strong">教育事業</strong>
+          <p class="p">
+            「地方部でも都心に負けないプログラミング教育」をスローガンに多くの地域で無料のプログラミングワークショップを開催しています。地域の小中学生を対象にモノづくりをテーマにプログラミングを学べる教室を開いたり、高校の部活動に外部講師として参加。これまでに石巻市、仙台市、大崎市、郡山市、滝沢市、河北町、大槌町、周南市、生駒市、横須賀市、酒田市などで計2000名以上の子どもたちにプログラミングを教えています。
+          </p>
+
+          <strong class="strong">開発事業</strong>
+          <p class="p">
+            WEBサイト/WEBアプリケーションの受託開発、自社サービスの開発運用などを主に行っています。また、他企業様が抱えている業務上の課題をシステム面でサポートしたり、地域のためのWebサービスなども手掛けています。
+            主な使用技術：HTML、CSS、JavaScript、TypeScript、Vue.js、SCSS、PHP、Node.js、AWS
+          </p>
+
+          <strong class="strong">ソーシャル事業</strong>
+          <p class="p">
+            地域福祉とIT、特に障害を抱えている方向けのWeb制作などを行っています。またスタッフも障害を抱えており、自身の経験を踏まえ障害者とIT技術との付き合い方などを講演しています。
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<style scoped lang="scss">
+  .h2 {
+    margin-bottom: 16px;
+  }
+
+  .table {
+    width: 100%;
+    margin-bottom: 32px;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-top: 3px solid $black;
+    border-bottom: 3px solid $black;
+  }
+
+  .tr {
+    border-bottom: 1px solid $black;
+  }
+
+  $cell-padding: 24px;
+  .th {
+    padding: $cell-padding math-div($cell-padding, 2) $cell-padding
+      $cell-padding;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: top;
+  }
+
+  .td {
+    padding: $cell-padding $cell-padding $cell-padding
+      math-div($cell-padding, 2);
+    vertical-align: top;
+  }
+
+  .p {
+    margin: 24px 0;
+  }
+
+  @include pc {
+    .h2 {
+      margin-bottom: 32px;
+    }
+
+    .th {
+      padding-right: 64px;
+    }
+
+    .strong {
+      margin-bottom: 16px;
+    }
+
+    .p {
+      margin-bottom: 32px;
+    }
+  }
+</style>

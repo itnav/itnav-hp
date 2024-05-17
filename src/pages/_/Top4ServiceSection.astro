@@ -1,0 +1,169 @@
+---
+import { route } from '@/router';
+import educationImagePath from './images/education.png?url';
+import developmentImagePath from './images/development.png?url';
+import UnderlinedButton from '@/components/button/UnderlinedButton.astro';
+import Top4ServiceSectionSvg from './Top4ServiceSectionSvg.svelte';
+import Top4ServiceSectionImg from './Top4ServiceSectionImg.svelte';
+---
+
+<section class="section">
+  <div class="container">
+    <div class="box right-box">
+      <div class="content">
+        <h3 class="h3">教育事業</h3>
+        <p class="p">
+          「地方部でも都心に負けないプログラミング教育」をスローガンに、地域の小中学生を対象にプログラミング教室を開いたり、高校の部活動に外部講師として参加したりしています。
+        </p>
+        <UnderlinedButton
+          tag="a"
+          href={route.about.path}
+          aria-label="About ページへ遷移"
+          class="link"
+        >
+          View more
+        </UnderlinedButton>
+      </div>
+    </div>
+
+    <Top4ServiceSectionImg
+      client:visible
+      src={educationImagePath}
+      alt="教育事業に関する画像"
+    />
+  </div>
+
+  <div class="container">
+    <div class="box left-box">
+      <div class="content">
+        <h3 class="h3">開発事業</h3>
+        <p class="p">
+          WEBサイト/WEBアプリケーションの受託開発、自社サービスの開発運用などを主に行っています。また、他企業様の業務上の課題をシステム面でサポートしたり、地域のためのWebサービスなどを手掛けたりしています。
+        </p>
+        <UnderlinedButton
+          tag="a"
+          href={route.about.path}
+          aria-label="About ページへ遷移"
+          class="link"
+        >
+          View more
+        </UnderlinedButton>
+      </div>
+    </div>
+
+    <Top4ServiceSectionImg
+      client:visible
+      src={developmentImagePath}
+      alt="開発事業に関する画像"
+      orientation="right"
+    />
+  </div>
+
+  <div class="text-align-right app-page-outer-padding-x">
+    <UnderlinedButton
+      tag="a"
+      href={route.services.path}
+      aria-label="Service 一覧ページへ遷移"
+    >
+      All Services
+    </UnderlinedButton>
+  </div>
+
+  <div class="service-bg">
+    <Top4ServiceSectionSvg />
+  </div>
+</section>
+
+<style scoped lang="scss">
+  .section {
+    position: relative;
+    box-sizing: border-box;
+    padding-top: 12vw;
+    margin-bottom: 72px;
+  }
+
+  .h3 {
+    margin-bottom: 24px;
+    font-size: 20px;
+  }
+
+  .p {
+    margin-bottom: 28px;
+  }
+
+  $box-height-half: 16%;
+  .box {
+    box-sizing: border-box;
+    width: 80%;
+    padding: 40px 40px $box-height-half;
+    color: $white;
+    background-color: $black;
+  }
+  .right-box {
+    margin-left: auto;
+  }
+
+  .text-align-right {
+    text-align: right;
+  }
+
+  .link {
+    margin-bottom: 56px;
+  }
+
+  .service-bg {
+    position: absolute;
+    top: -16px;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    padding: 8px 0;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  @include pc {
+    .section {
+      padding-top: 8vw;
+      margin-bottom: 160px;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    $content-img-margin: 8%;
+    .box {
+      box-sizing: border-box;
+      width: 56%;
+      padding: 0;
+      margin-bottom: $content-img-margin * 2;
+    }
+
+    .left-box {
+      padding-right: 4%;
+      margin-right: auto;
+    }
+    .right-box {
+      padding-left: 4%;
+      margin-left: auto;
+    }
+
+    .content {
+      box-sizing: border-box;
+      padding: 88px $page-outer-padding-pc-right;
+    }
+
+    .link {
+      margin-bottom: 0;
+    }
+
+    .h3 {
+      font-size: 30px;
+    }
+
+    .service-bg {
+      top: -24px;
+    }
+  }
+</style>

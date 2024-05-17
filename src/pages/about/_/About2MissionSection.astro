@@ -1,0 +1,21 @@
+---
+import MissionHeading from '@/components/heading/MissionHeading.svelte';
+import About2MissionSectionHeading from './About2MissionSectionHeading.svelte';
+---
+
+<section class="section app-page-padding-x app-limit-design-width">
+  <About2MissionSectionHeading client:visible />
+  <MissionHeading client:visible />
+</section>
+
+<style scoped lang="scss">
+  .section {
+    margin-bottom: 48px;
+
+    @include pc {
+      .section {
+        margin-bottom: 160px;
+      }
+    }
+  }
+</style>

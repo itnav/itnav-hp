@@ -1,3 +1,14 @@
 {
-  "extends": "astro/tsconfigs/strict"
+  "extends": "astro/tsconfigs/strict",
+  "files": ["./.env.d.ts"],
+  "include": ["./**/*", "./**/*.astro"],
+  "exclude": [".astro", "dist", "node_modules", "./postcss.config.*"],
+  "compilerOptions": {
+    "checkJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@": ["./src"],
+      "@/*": ["./src/*"]
+    }
+  }
 }
