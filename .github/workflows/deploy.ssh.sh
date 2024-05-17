@@ -5,6 +5,8 @@ mkdir -p $APP_DIR
 
 # Git の設定
 if [ -d "$APP_DIR/.git" ]; then
+	echo "\n[Updating the "$APP_DIR" repository.]"
+
 	# 作業先へ移動
 	cd $APP_DIR
 	git checkout $GITHUB_BRANCH_NAME
@@ -14,6 +16,8 @@ if [ -d "$APP_DIR/.git" ]; then
 	sudo git reset --hard origin/$GITHUB_BRANCH_NAME
 
 else
+	echo "\n[Cloning the "$GITHUB_REPOSITORY_NAME" repository.]"
+
 	# Git リポジトリをクローン
 	git clone git@github.com:$GITHUB_REPOSITORY_NAME.git $APP_DIR
 
@@ -24,9 +28,15 @@ else
 fi
 
 # 環境変数ファイルの生成
+echo "\n[Generating the .env file.]"
 echo "$APP_ENV" > .env
 
 # Docker Compose の実行
-docker compose
+echo "\n[Stopping the Docker Compose.]"
+docker compose down
+
+echo "\n[Building and running the Docker Compose.]"
 docker compose build
+
+echo "\n[Starting the Docker Compose.]"
 docker compose up -d
