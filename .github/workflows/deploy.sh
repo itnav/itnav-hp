@@ -12,6 +12,6 @@ echo -e "\n[Connecting to VPS and executing shell.]"
 ssh -i ~/.ssh/vps -p $VPS_PORT -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST "echo $(envsubst $env_list < ./.github/workflows/deploy.ssh.sh) | bash"
 
 if [ $? -ne 0 ]; then
-	echo -e "\nRemote command failed"
+	echo -e "! Remote command failed !"
   exit 1
 fi

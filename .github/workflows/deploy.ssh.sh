@@ -1,7 +1,5 @@
 # 前提: 実行元のサーバーは GitHub に対する SSH 公開鍵を登録している前提です。
 
-exit 1;
-
 # Application ディレクトリを作成
 mkdir -p $APP_DIR
 
