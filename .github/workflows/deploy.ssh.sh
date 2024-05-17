@@ -5,7 +5,7 @@ mkdir -p $APP_DIR
 
 # Git の設定
 if [ -d "$APP_DIR/.git" ]; then
-	echo -e"\n[Updating the "$APP_DIR" repository.]"
+	echo -e "\n[Updating the "$APP_DIR" repository.]"
 
 	# 作業先へ移動
 	cd $APP_DIR
