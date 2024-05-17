@@ -6,7 +6,12 @@ echo "$VPS_SSH_KEY" > ~/.ssh/vps
 chmod 600 ~/.ssh/vps
 
 # # SSH 接続設定
-# ssh-keyscan $VPS_HOST >> ~/.ssh/known_hosts
+ssh-keyscan $VPS_HOST >> ~/.ssh/known_hosts
+
+echo "Host: $VPS_HOST"
+echo "Port: $VPS_PORT"
+echo "User: $VPS_USER"
+echo "Key: ~/.ssh/vps $VPS_SSH_KEY"
 
 # # SSH 接続設定の重複削除
 # sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
@@ -15,4 +20,5 @@ chmod 600 ~/.ssh/vps
 env_list=$(compgen -v | awk '{printf "$%s,", $0}' | sed 's/,$//')
 
 # EC2 へ SSH 接続して Shell を実行
+# ssh -i ~/.ssh/vps -p $VPS_PORT $VPS_USER@$VPS_HOST "echo $(envsubst $env_list < ./.github/workflows/deploy.ssh.sh) | bash"
 ssh -i ~/.ssh/vps -p $VPS_PORT $VPS_USER@$VPS_HOST "echo $(envsubst $env_list < ./.github/workflows/deploy.ssh.sh) | bash"
