@@ -15,4 +15,4 @@ sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
 env_list=$(compgen -v | awk '{printf "$%s,", $0}' | sed 's/,$//')
 
 # EC2 へ SSH 接続して Shell を実行
-ssh -i ~/.ssh/vps -p $VPS_PORT $VPS_USER@$VPS_HOST
+ssh -i ~/.ssh/vps -p $VPS_PORT -o StrictHostKeyChecking=no $VPS_USER@$VPS_HOST
