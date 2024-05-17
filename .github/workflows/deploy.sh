@@ -2,8 +2,8 @@
 mkdir -p ~/.ssh
 
 # SSH key を用意
-echo "$VPS_SSH_PUB_KEY" > ~/.ssh/vps_rsa
-chmod 600 ~/.ssh/vps_rsa
+echo "$VPS_SSH_PUB_KEY" > ~/.ssh/vps
+chmod 600 ~/.ssh/vps
 
 # SSH 接続設定
 ssh-keyscan $VPS_HOST >> ~/.ssh/known_hosts
@@ -15,4 +15,4 @@ sort -u ~/.ssh/known_hosts -o ~/.ssh/known_hosts
 env_list=$(compgen -v | awk '{printf "$%s,", $0}' | sed 's/,$//')
 
 # EC2 へ SSH 接続して Shell を実行
-ssh -i ~/.ssh/vps_rsa $VPS_USER@$VPS_HOST "echo $(envsubst $env_list < ./.github/workflows/deploy.ssh.sh) | bash"
+ssh -i ~/.ssh/vps -p $VPS_PORT $VPS_USER@$VPS_HOST "echo $(envsubst $env_list < ./.github/workflows/deploy.ssh.sh) | bash"
