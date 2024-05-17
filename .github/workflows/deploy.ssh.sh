@@ -13,7 +13,7 @@ if [ -d "$APP_DIR/.git" ]; then
 
 	# 最新の状態を取り込み上書き
 	git fetch origin $GITHUB_BRANCH_NAME
-	sudo git reset --hard origin/$GITHUB_BRANCH_NAME
+	git reset --hard origin/$GITHUB_BRANCH_NAME
 
 else
 	echo -e "\n[Cloning the "$GITHUB_REPOSITORY_NAME" repository.]"
