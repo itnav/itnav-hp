@@ -27,6 +27,6 @@ fi
 echo "$APP_ENV" > .env
 
 # Docker Compose の実行
-# docker compose --env-file .env down
-# docker compose --env-file .env build
-# docker compose --env-file .env up -d
+docker compose
+docker compose build
+docker compose up -d
