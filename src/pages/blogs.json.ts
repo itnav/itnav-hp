@@ -4,6 +4,6 @@ import { defineJsonEndpoint } from '@/api/response';
 
 export type GetResponse = Awaited<ReturnType<typeof get>>;
 export const GET: APIRoute = (context) => defineJsonEndpoint(get, context);
-async function get(context: APIContext) {
+async function get(_: APIContext) {
   return fetchBlogs({ orders: '-createdAt', limit: 4 });
 }

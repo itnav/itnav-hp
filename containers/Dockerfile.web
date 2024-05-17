@@ -30,6 +30,9 @@ FROM base AS builder-deps
 
 # アプリケーションをビルドするステージ
 FROM builder-deps as builder
+	# Node の環境変数を設定
+	ENV NODE_OPTIONS "--max-old-space-size=4096"
+
 	# 全てのファイルをコピー
 	COPY . .
 

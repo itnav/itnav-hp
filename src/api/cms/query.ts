@@ -1,4 +1,4 @@
-import { isClient, serverOnly } from '@/utils/runtime';
+import { serverOnly } from '@/utils/runtime';
 import { formatQueryToString } from '../api';
 import type { MicroCMSEntity, MicroCMSResponse } from './schema';
 
