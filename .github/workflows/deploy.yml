@@ -22,5 +22,5 @@ jobs:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_PORT: ${{ secrets.VPS_PORT }}
-          VPS_SSH_PUB_KEY: ${{ secrets.VPS_SSH_PUB_KEY }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: bash ./.github/workflows/deploy.sh

@@ -2,7 +2,7 @@
 mkdir -p ~/.ssh
 
 # SSH key を用意
-echo "$VPS_SSH_PUB_KEY" > ~/.ssh/vps
+echo "$VPS_SSH_KEY" > ~/.ssh/vps
 chmod 600 ~/.ssh/vps
 
 # SSH 接続設定
