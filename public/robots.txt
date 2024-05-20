@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://itnav.co.jp/sitemap-index.xml

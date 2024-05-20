@@ -33,9 +33,6 @@ FROM builder-deps as builder
 	# 全てのファイルをコピー
 	COPY . .
 
-	# 環境変数を本番環境のものに上書き
-	COPY ./.env ./.env.local
-
 	## ビルド
 	RUN npm run build
 

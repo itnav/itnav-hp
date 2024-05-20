@@ -1,7 +1,10 @@
 import type { APIContext, APIRoute } from 'astro';
 import { defineJsonEndpoint } from '@/api/response';
 import { fetchBlogs } from '@/api/cms/fetch/blogs';
-import { formatMicroCMSQueryFilters } from '@/api/cms/query';
+import {
+  createExcludingTestMicroCMSQueryFilter,
+  formatMicroCMSQueryFilters,
+} from '@/api/cms/query';
 
 export const prerender = false;
 
@@ -10,10 +13,12 @@ export const GET: APIRoute = (context) => defineJsonEndpoint(get, context);
 async function get({ request }: APIContext) {
   const searchParams = new URL(request.url).searchParams;
 
-  let filters = '';
+  // `test` タグが含まれていないブログを取得する
+  let filters = createExcludingTestMicroCMSQueryFilter();
 
   const categories = searchParams.get('category')?.split(',') || [];
   if (categories.length) {
+    filters += `[or]`;
     filters += formatMicroCMSQueryFilters(
       'category',
       'equals',
@@ -24,7 +29,7 @@ async function get({ request }: APIContext) {
 
   const tags = searchParams.get('tag')?.split(',') || [];
   if (tags.length) {
-    if (filters) filters += `[or]`;
+    filters += `[or]`;
     filters += formatMicroCMSQueryFilters('tags', 'contains', tags, 'or');
   }
 

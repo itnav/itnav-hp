@@ -123,6 +123,10 @@ export function formatMicroCMSQueryFilter(
   return `${key}[${filterOperator}]${value}`;
 }
 
+export function createExcludingTestMicroCMSQueryFilter() {
+  return formatMicroCMSQueryFilter('tags', 'not_contains', 'test');
+}
+
 export function formatMicroCMSQueryFilters(
   key: string,
   filterOperator: MicroCMSFilterOperators,
@@ -169,8 +173,10 @@ export function microCMSRawFetch<T extends MicroCMSEntity>(
 export function microCMSFetch<T extends MicroCMSEntity>(
   endpoint: string,
   query: MicroCMSQuery<T> = {},
-): Promise<MicroCMSResponse<T>> {
-  return microCMSRawFetch<T>(endpoint, query).then((res) => res.json());
+) {
+  return microCMSRawFetch<T>(endpoint, query).then(
+    (res) => res.json() as Promise<MicroCMSResponse<T>>,
+  );
 }
 
 /**
@@ -197,7 +203,7 @@ export function microCMSFetchMany<T extends MicroCMSEntity>(
 export function microCMSFetchOne<T extends MicroCMSEntity>(
   endpoint: string,
   query: MicroCMSQuery<T> = {},
-): Promise<T> {
+) {
   // 取得制限の設定を上書きして１件だけ取得する
   query.limit = 1;
 
@@ -216,7 +222,7 @@ export function microCMSFetchById<T extends MicroCMSEntity>(
   endpoint: string,
   id: string,
   query: MicroCMSQuery<T> = {},
-): Promise<T> {
+) {
   return microCMSRawFetch<T>(`${endpoint}/${id}`, query).then(
     (res) => res.json() as Promise<T>,
   );

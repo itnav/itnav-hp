@@ -63,6 +63,21 @@ cd itnav-hp
 bun install
 ```
 
+#### 4. 環境変数を設定
+
+`.env.example` ファイルをコピーして `.env` ファイルを作成し、必要に応じて追加の環境変数を設定してください。
+
+```bash
+cp ./.env.example ./.env
+```
+
+**編集例**
+
+```.env
+WEB_CMS_DOMAIN=https://<xxx>.microcms.io/api/v1
+WEB_CMS_API_KEY=<xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx>
+```
+
 ### 開発サーバーの起動
 
 #### 1. ローカルサーバーを起動

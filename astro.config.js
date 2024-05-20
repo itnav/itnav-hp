@@ -1,13 +1,11 @@
-import node from '@astrojs/node';
-import sitemap from '@astrojs/sitemap';
-import svelte from '@astrojs/svelte';
 import compress from '@playform/compress';
-import cssInline from '@playform/inline';
 import compressor from 'astro-compressor';
+import cssInline from '@playform/inline';
+import node from '@astrojs/node';
 import pageInsight from 'astro-page-insight';
-import robotsTxt from 'astro-robots-txt';
-import { defineConfig } from 'astro/config';
+import svelte from '@astrojs/svelte';
 import viteConfig from './vite.config';
+import { defineConfig } from 'astro/config';
 
 /** @see {@link https://astro.build/config} Documents */
 export default defineConfig({
@@ -39,22 +37,6 @@ export default defineConfig({
      * @see {@link https://www.npmjs.com/package/astro-page-insight} npm
      */
     pageInsight(),
-
-    /**
-     * ビルド時にサイトマップを生成するためのインテグレーション
-     *
-     * @see {@link https://docs.astro.build/en/guides/integrations-guide/sitemap} Documents
-     * @see {@link https://www.npmjs.com/package/@astrojs/sitemap} npm
-     */
-    sitemap(),
-
-    /**
-     * ビルド時に robots.txt を生成するためのインテグレーション
-     *
-     * @see {@link https://github.com/alextim/astro-lib/tree/main/packages/astro-robots-txt#readme} Documents
-     * @see {@link https://www.npmjs.com/package/astro-robots-txt} npm
-     */
-    robotsTxt(),
 
     /**
      * Astro のビルド時に HTML に CSS をインラインで埋め込むためのインテグレーション

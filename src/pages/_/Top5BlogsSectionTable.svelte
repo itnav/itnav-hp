@@ -89,6 +89,7 @@
     width: 100%;
     text-align: left;
     border-collapse: collapse;
+    animation: transition(fade-in, medium4, ease-in-out) both;
   }
   .table,
   .tbody {
