@@ -9,7 +9,12 @@ import Top6WeAreHiringSection from './_/Top6WeAreHiringSection.astro';
 import Top7LastSection from './_/Top7LastSection.svelte';
 ---
 
-<Layout>
+<Layout
+  seo={{
+    description:
+      'イトナブは若者たちにITの学びの場と機会を提供し、世界で活躍できる人材を育成することを目指すIT企業です。プログラミング教育を通じて自ら学び、コミュニケーション能力を養い、挑戦する力を身につけさせます。地域と連携し、きっかけから探求、活躍までの発射台を全世界に作ります。"',
+  }}
+>
   <Top1FirstSection client:visible />
 
   <Top2OurMissionSection />

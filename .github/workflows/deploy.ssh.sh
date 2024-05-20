@@ -31,12 +31,14 @@ fi
 echo -e "\n[Generating the .env file.]"
 echo "$APP_ENV" > .env
 
-# Docker Compose の実行
+# アプリケーションを Build
+echo -e "\n[Building and running the Docker Compose.]"
+docker compose build --no-cache
+
+# コンテナを Down する
 echo -e "\n[Stopping the Docker Compose.]"
 docker compose down
 
-echo -e "\n[Building and running the Docker Compose.]"
-docker compose build
-
+# コンテナを起動する
 echo -e "\n[Starting the Docker Compose.]"
 docker compose up -d

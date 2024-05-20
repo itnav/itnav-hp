@@ -80,24 +80,14 @@ WEB_CMS_API_KEY=<xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx>
 
 ### 開発サーバーの起動
 
-#### 1. ローカルサーバーを起動
-
 ```bash
 bun dev
 ```
 
 ### 本番環境を模倣した開発サーバーの起動
 
-#### 1. 本番環境用のコードをビルド
-
 ```bash
-bun build
-```
-
-#### 2. 本番環境用のコードを用いて開発環境を起動
-
-```bash
-bun preview
+bun prod
 ```
 
 <br />
