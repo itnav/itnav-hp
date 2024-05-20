@@ -3,10 +3,12 @@ import { route } from '@/router';
 import ItnavLogoSvg from '@/components/svg/ItnavLogoSvg.svelte';
 import PhoneInTalkIconSvg from './icons/PhoneInTalkIconSvg.svelte';
 import AmatarStudy3LogoPath from './images/amatar-study3-logo.svg?url';
-import NabukatuLabLogoPath from './images/nabukatu-lab-logo.png?url';
+import NabukatuLabLogoPngPath from './images/nabukatu-lab-logo.png?url';
+import NabukatuLabLogoWebpPath from './images/nabukatu-lab-logo.webp?url';
 import NabukatuLabSeedsLogoPath from './images/nabukatu-lab-seeds-logo.svg?url';
 import NabukatuPath from './images/nabukatu-logo.svg?url';
-import YumeAcademyLogoPath from './images/yume-academy-logo.png?url';
+import YumeAcademyLogoPngPath from './images/yume-academy-logo.png?url';
+import YumeAcademyLogoWebpPath from './images/yume-academy-logo.webp?url';
 ---
 
 <footer class="footer" transition:persist="layout-footer">
@@ -48,7 +50,14 @@ import YumeAcademyLogoPath from './images/yume-academy-logo.png?url';
             rel="noopener noreferrer"
             aria-label="夢アカデミーのサイトを開く"
           >
-            <img src={YumeAcademyLogoPath} alt="夢アカデミー" loading="lazy" />
+            <picture>
+              <source srcset={YumeAcademyLogoWebpPath} type="image/webp" />
+              <img
+                src={YumeAcademyLogoPngPath}
+                alt="夢アカデミー"
+                loading="lazy"
+              />
+            </picture>
           </a>
         </div>
 
@@ -62,12 +71,14 @@ import YumeAcademyLogoPath from './images/yume-academy-logo.png?url';
               aria-label="ナブかつLAB のサイトを開く"
             >
               <div class="red-flame img-flame-2">
-                <img
-                  class="img-2"
-                  src={NabukatuLabLogoPath}
-                  alt="ナブかつLAB"
-                  loading="lazy"
-                />
+                <picture class="img-2">
+                  <source srcset={NabukatuLabLogoWebpPath} type="image/webp" />
+                  <img
+                    src={NabukatuLabLogoPngPath}
+                    alt="ナブかつLAB"
+                    loading="lazy"
+                  />
+                </picture>
               </div>
             </a>
 
@@ -250,7 +261,8 @@ import YumeAcademyLogoPath from './images/yume-academy-logo.png?url';
     }
   }
 
-  .project .link {
+  .project .link,
+  .project .picture {
     display: contents;
   }
 

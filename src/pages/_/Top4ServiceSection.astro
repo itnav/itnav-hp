@@ -1,7 +1,9 @@
 ---
 import { route } from '@/router';
-import educationImagePath from './images/education.png?url';
+import educationPngPath from './images/education.png?url';
+import educationWebpPath from './images/education.webp?url';
 import developmentImagePath from './images/development.png?url';
+import developmentWebpPath from './images/development.webp?url';
 import UnderlinedButton from '@/components/button/UnderlinedButton.astro';
 import Top4ServiceSectionSvg from './Top4ServiceSectionSvg.svelte';
 import Top4ServiceSectionImg from './Top4ServiceSectionImg.svelte';
@@ -28,7 +30,8 @@ import Top4ServiceSectionImg from './Top4ServiceSectionImg.svelte';
 
     <Top4ServiceSectionImg
       client:visible
-      src={educationImagePath}
+      png={educationPngPath}
+      webp={educationWebpPath}
       alt="教育事業に関する画像"
     />
   </div>
@@ -53,7 +56,8 @@ import Top4ServiceSectionImg from './Top4ServiceSectionImg.svelte';
 
     <Top4ServiceSectionImg
       client:visible
-      src={developmentImagePath}
+      png={developmentImagePath}
+      webp={developmentWebpPath}
       alt="開発事業に関する画像"
       orientation="right"
     />

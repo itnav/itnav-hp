@@ -8,7 +8,7 @@
   });
 </script>
 
-<h3 class={`heading ${additionalClass}`}>
+<h2 class={`heading ${additionalClass}`}>
   <span class="app-wave-across-animation-on-visible">
     <strong class="it app-en">IT</strong>
     <span class="it-sub">で生きる、</span>
@@ -17,7 +17,7 @@
   <span class="app-wave-across-animation-on-visible">
     はじまりの場をつくる。
   </span>
-</h3>
+</h2>
 
 <style scoped lang="scss">
   .heading {

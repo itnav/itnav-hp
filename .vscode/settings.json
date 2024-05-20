@@ -35,8 +35,5 @@
   ],
 
   "cSpell.userWords": [],
-  "yaml.schemas": {
-    "https://json.schemastore.org/yamllint.json": "file:///Users/junpei/Documents/Developments/itnav/itnav-hp/itnav-hp-astro/.github/workflows/deploy.yml"
-  },
-  "cSpell.words": ["steveltn"]
+  "cSpell.words": []
 }

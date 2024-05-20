@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  export let src: string;
+  export let png: string;
+  export let webp: string;
   export let alt: string;
   export let orientation: 'left' | 'right' = 'left';
 
@@ -13,7 +14,10 @@
 </script>
 
 <div class={`frame ${additionalClass} ${orientation}`}>
-  <img class="img" {src} {alt} />
+  <picture>
+    <source type="image/webp" srcset={webp} />
+    <img class="img" src={png} {alt} />
+  </picture>
 </div>
 
 <style scoped lang="scss">
