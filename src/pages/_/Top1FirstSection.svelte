@@ -165,27 +165,27 @@
     animation-fill-mode: forwards;
 
     /* stylelint-disable scss/selector-no-union-class-name */
-    &-1 {
-      animation-delay: 600ms;
-    }
+    // &-1 {
+    // 	animation-delay: 0;
+    // }
     &-2 {
-      animation-delay: 700ms;
+      animation-delay: 100ms;
     }
     &-3 {
-      animation-delay: 800ms;
+      animation-delay: 200ms;
     }
     &-4 {
-      animation-delay: 900ms;
+      animation-delay: 300ms;
     }
     &-5 {
       animation-duration: 300ms;
-      animation-delay: 1000ms;
+      animation-delay: 400ms;
     }
 
     // 改行
-    &-6 {
-      animation-delay: 0;
-    }
+    // &-6 {
+    // 	animation-delay: 0;
+    // }
     &-7 {
       animation-delay: 100ms;
     }
@@ -210,9 +210,9 @@
     }
 
     // 改行
-    &-14 {
-      animation-delay: 0;
-    }
+    // &-14 {
+    //   animation-delay: 0;
+    // }
     &-15 {
       animation-duration: 300ms;
       animation-delay: 100ms;
