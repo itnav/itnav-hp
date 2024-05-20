@@ -16,7 +16,7 @@
 <div class={`frame ${additionalClass} ${orientation}`}>
   <picture>
     <source type="image/webp" srcset={webp} />
-    <img class="img" src={png} {alt} />
+    <img class="img" src={png} {alt} loading="lazy" />
   </picture>
 </div>
 
