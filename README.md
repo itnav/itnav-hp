@@ -2,7 +2,7 @@
 
 URL: https://itnav.co.jp
 
-<br / >
+<br />
 
 ## 🍀 必須環境
 
@@ -25,7 +25,10 @@ URL: https://itnav.co.jp
 
 ### Backend
 
-- [Astro (Node)](https://astro.build)
+- [Astro](https://astro.build)
+
+### Backend Runtime
+- [Bun](https://bun.sh)
 
 ### CMS
 
