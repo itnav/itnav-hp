@@ -35,5 +35,9 @@
   ],
 
   "cSpell.userWords": [],
-  "cSpell.words": []
+  "cSpell.words": [],
+
+  "[yaml]": {
+    "editor.insertSpaces": true
+  }
 }
