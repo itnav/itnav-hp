@@ -16,6 +16,7 @@
 
 <style scoped lang="scss">
   .member {
+    aspect-ratio: 1;
     opacity: 0;
     transition: transition(opacity, long1, ease-in-out, short2);
   }
