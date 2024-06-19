@@ -9,7 +9,7 @@ URL: https://itnav.co.jp
 - [Node >= 21.x](https://nodejs.org/en/download/package-manager)
 - [Bun >= 1x](https://bun.sh/docs/installation)
 
-### 🥬 推奨環境
+### 推奨環境
 
 - [Docker >= 20.x](https://docs.docker.com/get-docker)
   - ※ デプロイが正常に行われることを確認するためだけに使用
