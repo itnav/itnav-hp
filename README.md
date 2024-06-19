@@ -102,7 +102,7 @@ bun prod
 
 ### 流れ
 
-1. `main` ブランチに PR を作成
+1. `main` ブランチ向けに PR を作成
 2. PR に対してレビュー & 承認（Approve）をもらいマージ
 3. デプロイが正常に行われることを祈る（[こちら](https://github.com/itnav/itnav-hp/actions)で確認可能）
 
