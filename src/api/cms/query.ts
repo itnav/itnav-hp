@@ -5,6 +5,20 @@ import type { MicroCMSEntity, MicroCMSResponse } from './schema';
 /** @see https://document.microcms.io/content-api/get-list-contents#hbe150f4148 */
 export interface MicroCMSQuery<T extends MicroCMSEntity> {
   /**
+   * 使用する API の種類。
+   *
+   * @default classic
+   */
+  type?: 'classic' | 'members';
+
+  /**
+   * Test プロパティが true のコンテンツを含めるかどうかを指定することができる。
+   *
+   * @default false
+   */
+  includeTest?: boolean;
+
+  /**
    * 下書き状態のコンテンツを対象に含ませるかどうかを指定することができる。
    *
    * @default false
@@ -124,7 +138,7 @@ export function formatMicroCMSQueryFilter(
 }
 
 export function createExcludingTestMicroCMSQueryFilter() {
-  return formatMicroCMSQueryFilter('tags', 'not_contains', 'test');
+  return formatMicroCMSQueryFilter('test', 'not_equals', 'true');
 }
 
 export function formatMicroCMSQueryFilters(
@@ -155,13 +169,39 @@ export function microCMSRawFetch<T extends MicroCMSEntity>(
 ) {
   serverOnly();
 
-  const queryParams = query ? formatQueryToString(query) : '';
+  const q = query || {};
+  if (!q.includeTest) {
+    const excludeTestQuery = createExcludingTestMicroCMSQueryFilter();
+    q.filters = q.filters
+      ? `${excludeTestQuery}[and](${q.filters})`
+      : excludeTestQuery;
+  }
 
-  return fetch(`${import.meta.env.WEB_CMS_DOMAIN}${endpoint}${queryParams}`, {
-    headers: {
-      'X-MICROCMS-API-KEY': import.meta.env.WEB_CMS_API_KEY,
-    },
-  });
+  const queryParams = q ? formatQueryToString(q) : '';
+  const queryType = q.type;
+
+  // ↓ Members API を叩く
+  if (queryType === 'members') {
+    return fetch(
+      `${import.meta.env.WEB_CMS_MEMBERS_API_DOMAIN}${endpoint}${queryParams}`,
+      {
+        headers: {
+          'X-MICROCMS-API-KEY': import.meta.env.WEB_CMS_MEMBERS_API_KEY,
+        },
+      },
+    );
+
+    // ↓ Classic API を叩く
+  } else {
+    return fetch(
+      `${import.meta.env.WEB_CMS_API_DOMAIN}${endpoint}${queryParams}`,
+      {
+        headers: {
+          'X-MICROCMS-API-KEY': import.meta.env.WEB_CMS_API_KEY,
+        },
+      },
+    );
+  }
 }
 
 /**

@@ -6,8 +6,10 @@ interface ImportMetaEnv {
   WEB_URL: string;
 
   // CMS
-  WEB_CMS_DOMAIN: string;
+  WEB_CMS_API_DOMAIN: string;
   WEB_CMS_API_KEY: string;
+  WEB_CMS_MEMBERS_API_DOMAIN: string;
+  WEB_CMS_MEMBERS_API_KEY: string;
 }
 
 interface ImportMeta {

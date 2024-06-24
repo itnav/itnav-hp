@@ -2,7 +2,7 @@
   import { createFetcherStore } from '@/stores/nanostore';
   import { timestampToYYYYMMDD } from '@/utils/date';
   import { searchBlogCategoryParams, searchBlogTagParams } from './blog.state';
-  import type { GetRequest } from '../blogs.json';
+  import type { GetResponse } from '../blogs.json';
   import { onMount } from 'svelte';
 
   export let contentElementId: string | undefined;
@@ -10,7 +10,7 @@
   const baseBlogsQueryEndpoint = `/blogs/blogs.json`;
   let blogsQueryEndpoint = baseBlogsQueryEndpoint;
 
-  $: blogsQuery = createFetcherStore<GetRequest>(blogsQueryEndpoint, {
+  $: blogsQuery = createFetcherStore<GetResponse>(blogsQueryEndpoint, {
     fetcher: () => fetch(blogsQueryEndpoint).then((res) => res.json()),
   });
 

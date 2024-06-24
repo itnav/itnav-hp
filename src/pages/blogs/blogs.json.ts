@@ -1,24 +1,20 @@
 import type { APIContext, APIRoute } from 'astro';
 import { defineJsonEndpoint } from '@/api/response';
 import { fetchBlogs } from '@/api/cms/fetch/blogs';
-import {
-  createExcludingTestMicroCMSQueryFilter,
-  formatMicroCMSQueryFilters,
-} from '@/api/cms/query';
+import { formatMicroCMSQueryFilters } from '@/api/cms/query';
 
 export const prerender = false;
 
-export type GetRequest = Awaited<ReturnType<typeof get>>;
+export type GetResponse = Awaited<ReturnType<typeof get>>;
 export const GET: APIRoute = (context) => defineJsonEndpoint(get, context);
 async function get({ request }: APIContext) {
   const searchParams = new URL(request.url).searchParams;
 
-  // `test` タグが含まれていないブログを取得する
-  let filters = createExcludingTestMicroCMSQueryFilter();
+  let filters = '';
 
   const categories = searchParams.get('category')?.split(',') || [];
   if (categories.length) {
-    filters += `[or]`;
+    if (filters) filters += `[or]`;
     filters += formatMicroCMSQueryFilters(
       'category',
       'equals',
@@ -29,13 +25,13 @@ async function get({ request }: APIContext) {
 
   const tags = searchParams.get('tag')?.split(',') || [];
   if (tags.length) {
-    filters += `[or]`;
+    if (filters) filters += `[or]`;
     filters += formatMicroCMSQueryFilters('tags', 'contains', tags, 'or');
   }
 
   return fetchBlogs({
     orders: '-createdAt',
-    filters,
     limit: 16,
+    filters,
   });
 }
