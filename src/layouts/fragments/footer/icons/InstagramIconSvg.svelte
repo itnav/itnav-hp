@@ -17,7 +17,8 @@
 
 <style>
   .InstagramIconSvg {
-		width: 24px;
-		height: 24px;
+		width: 18px;
+		height: 18px;
+		padding: 3px;
 	}
 </style>
