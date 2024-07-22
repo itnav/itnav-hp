@@ -50,6 +50,6 @@ echo -e "[Starting the Docker Compose.]"
 docker compose up -d
 
 # Build で発生した未使用のイメージを削除
-echo -e " "
-echo -e "[Removing the unused Docker images.]"
-sudo docker image prune -f
+# echo -e " "
+# echo -e "[Removing the unused Docker images.]"
+# docker image prune -f
