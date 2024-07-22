@@ -5,7 +5,7 @@ mkdir -p $APP_DIR
 
 # Git の設定
 if [ -d "$APP_DIR/.git" ]; then
-	echo -e ""
+	echo -e " "
 	echo -e "[Updating the "$APP_DIR" repository.]"
 
 	# 作業先へ移動
@@ -17,7 +17,7 @@ if [ -d "$APP_DIR/.git" ]; then
 	git reset --hard origin/$GITHUB_BRANCH_NAME
 
 else
-	echo -e ""
+	echo -e " "
 	echo -e "[Cloning the "$GITHUB_REPOSITORY_NAME" repository.]"
 
 	# Git リポジトリをクローン
@@ -35,7 +35,7 @@ echo -e "[Generating the .env file.]"
 echo "$APP_ENV" > .env
 
 # アプリケーションを Build
-echo -e ""
+echo -e " "
 echo -e "[Building and running the Docker Compose.]"
 docker compose build
 
@@ -50,6 +50,6 @@ echo -e "[Starting the Docker Compose.]"
 docker compose up -d
 
 # Build で発生した未使用のイメージを削除
-# echo -e " "
-# echo -e "[Removing the unused Docker images.]"
-# docker image prune -f
+echo -e " "
+echo -e "[Removing the unused Docker images.]"
+sudo docker image prune -f
