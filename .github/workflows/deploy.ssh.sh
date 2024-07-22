@@ -5,7 +5,8 @@ mkdir -p $APP_DIR
 
 # Git の設定
 if [ -d "$APP_DIR/.git" ]; then
-	echo -e "\n[Updating the "$APP_DIR" repository.]"
+	echo -e ""
+	echo -e "[Updating the "$APP_DIR" repository.]"
 
 	# 作業先へ移動
 	cd $APP_DIR
@@ -16,7 +17,8 @@ if [ -d "$APP_DIR/.git" ]; then
 	git reset --hard origin/$GITHUB_BRANCH_NAME
 
 else
-	echo -e "\n[Cloning the "$GITHUB_REPOSITORY_NAME" repository.]"
+	echo -e ""
+	echo -e "[Cloning the "$GITHUB_REPOSITORY_NAME" repository.]"
 
 	# Git リポジトリをクローン
 	git clone git@github.com:$GITHUB_REPOSITORY_NAME.git $APP_DIR
@@ -28,21 +30,26 @@ else
 fi
 
 # 環境変数ファイルの生成
-echo -e "\n[Generating the .env file.]"
+echo -e " "
+echo -e "[Generating the .env file.]"
 echo "$APP_ENV" > .env
 
 # アプリケーションを Build
-echo -e "\n[Building and running the Docker Compose.]"
+echo -e ""
+echo -e "[Building and running the Docker Compose.]"
 docker compose build
 
 # コンテナを Down する
-echo -e "\n[Stopping the Docker Compose.]"
+echo -e " "
+echo -e "[Stopping the Docker Compose.]"
 docker compose down
 
 # コンテナを起動する
-echo -e "\n[Starting the Docker Compose.]"
+echo -e " "
+echo -e "[Starting the Docker Compose.]"
 docker compose up -d
 
 # Build で発生した未使用のイメージを削除
-echo -e "\n[Removing the unused Docker images.]"
-docker image prune -f
+# echo -e " "
+# echo -e "[Removing the unused Docker images.]"
+# docker image prune -f
