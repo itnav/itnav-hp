@@ -33,7 +33,7 @@ echo "$APP_ENV" > .env
 
 # アプリケーションを Build
 echo -e "\n[Building and running the Docker Compose.]"
-docker compose build --no-cache
+docker compose build
 
 # コンテナを Down する
 echo -e "\n[Stopping the Docker Compose.]"
@@ -42,3 +42,7 @@ docker compose down
 # コンテナを起動する
 echo -e "\n[Starting the Docker Compose.]"
 docker compose up -d
+
+# Build で発生した未使用のイメージを削除
+echo -e "\n[Removing the unused Docker images.]"
+docker image prune -f
