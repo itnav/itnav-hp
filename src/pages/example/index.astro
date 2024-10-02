@@ -1,0 +1,35 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ExampleComponent from '@/pages/example/_/ExampleComponent.svelte';
+
+export const prerender = true;
+
+const pageTitle = "サンプルページ";
+const pageDescription = "これは既存の記法に沿ったサンプルのページです。";
+---
+<Layout
+  seo={{
+    title: pageTitle,
+    description: pageDescription,
+    openGraph: {
+      basic: {
+        title: pageTitle,
+        type: 'website',
+        image: 'https://itnav.co.jp/images/sample-og-image.png',
+      },
+    },
+  }}
+  main={{
+    class: 'main example-page-padding',
+  }}
+>
+  <h1 class="h1">{pageTitle}</h1>
+
+  <div class="content">
+		<!-- コンポーネントの読み込み client:idleがないとデータのフェッチが走らない -->
+    <ExampleComponent client:idle />
+  </div>
+</Layout>
+
+<style lang="scss" is:global>
+</style>
