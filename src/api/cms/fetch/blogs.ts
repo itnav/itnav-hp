@@ -26,6 +26,10 @@ export function fetchBlog(query?: MicroCMSQuery<Blog>) {
   return microCMSFetchOne('/blogs', query);
 }
 
-export function fetchBlogById(id: string, query?: MicroCMSQuery<Blog>) {
-  return microCMSFetchById(`/blogs`, id, query);
+export async function fetchBlogById(blogId: string) {
+  const response = await fetch(
+    `http://localhost:10003/wp-json/wp/v2/posts/${blogId}?_embed`,
+  );
+  const data = await response.json();
+  return data;
 }
