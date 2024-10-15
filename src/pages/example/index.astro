@@ -4,9 +4,10 @@ import ExampleComponent from '@/pages/example/_/ExampleComponent.svelte';
 
 export const prerender = true;
 
-const pageTitle = "サンプルページ";
-const pageDescription = "これは既存の記法に沿ったサンプルのページです。";
+const pageTitle = 'サンプルページ';
+const pageDescription = 'これは既存の記法に沿ったサンプルのページです。';
 ---
+
 <Layout
   seo={{
     title: pageTitle,
@@ -26,10 +27,9 @@ const pageDescription = "これは既存の記法に沿ったサンプルのペ�
   <h1 class="h1">{pageTitle}</h1>
 
   <div class="content">
-		<!-- コンポーネントの読み込み client:idleがないとデータのフェッチが走らない -->
+    <!-- コンポーネントの読み込み client:idleがないとデータのフェッチが走らない -->
     <ExampleComponent client:idle />
   </div>
 </Layout>
 
-<style lang="scss" is:global>
-</style>
+<style lang="scss" is:global></style>
