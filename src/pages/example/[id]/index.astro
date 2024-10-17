@@ -4,9 +4,9 @@ import Thumbnail from './_/BlogThumbnail.svelte';
 import { fetchBlogById } from '@/api/cms/fetch/blogs';
 
 export const prerender = false;
-console.log('hoge');
 
 const blogId = Astro.params.id!;
+console.log('blogId', blogId);
 
 const blog = await fetchBlogById(blogId);
 
@@ -17,28 +17,28 @@ const blogDescription = blog.content.rendered
   .replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
   .slice(0, 104);
 console.log('blogDescription', blogDescription);
+
 // const blogThumbnail = blog.thumbnail.url;
 ---
 
-<h1>やぽ！</h1>
 <Layout
   seo={{
     title: blog.title,
     description: blogDescription,
     // openGraph: {
-    //   basic: {
-    //     title: blogTitle,
-    //     type: 'article',
-    //     image: blogThumbnail,
-    //   },
+    // basic: {
+    // title: blogTitle,
+    // type: 'article',
+    // image: blogThumbnail,
+    // },
     // },
   }}
   main={{
     class: 'main app-page-padding-y app-page-padding-x',
   }}
 >
-  <!-- <h1 class="h1">{blogTitle}</h1> -->
-  <h1>hoge</h1>
+  <h1 class="h1">{blog.title.rendered}</h1>
+  <!-- <h1 class="h1">hoge</h1> -->
 
   <div class="tags">
     {blog.tags.map((tag: any) => <span class="tag"># {tag.name}</span>)}
@@ -53,120 +53,119 @@ console.log('blogDescription', blogDescription);
       alt=""
     /> -->
     <Thumbnail class="thumbnail" transition:name="blog" id={blogId} alt="" />
-    <h1>aaa</h1>
+    <h1>{blogId}</h1>
 
     <div class="article-content">
-      <section class="article-text" set:html={blog.content}>
-        <!-- <button
+      <!-- <section class="article-text" set:html={blog.content}> -->
+      <!-- <button
 					class="content-end-button app-rounded-button app-mono"
 					aria-label="記事の先頭に戻る"
 					on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
 				>
 					PAGE TOP
 				</button> -->
-        <h1>aaa</h1>
-      </section>
+      <h1>aaa</h1>
+    </div>
 
-      <!-- 
+    <!-- 
         <nav class="nav">
           <slot name="nav" />
         </nav> -->
-    </div>
   </article>
+</Layout>
 
-  <style scoped lang="scss">
-    :global(.main) {
-      width: 100%;
-      max-width: 1024px;
-      margin: 0 auto;
+<style scoped lang="scss">
+  :global(.main) {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+  }
+
+  .h1 {
+    margin-bottom: 16px;
+    font-size: rpx(min(26px, 26rpx), mp);
+    font-weight: bold;
+  }
+
+  .tags {
+    margin-bottom: 32px;
+    color: $primary;
+  }
+  .tag {
+    font-size: 16px;
+    line-height: 2;
+  }
+
+  .thumbnail {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 32px;
+    border: 2px solid $outline-variant;
+    border-top-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
+
+  .article-content {
+    margin-bottom: 80px;
+  }
+
+  .article-text {
+    :global(h1) {
+      margin-top: 40px;
+      margin-bottom: 12px;
+      font-size: 1.8rem;
     }
 
+    :global(h2) {
+      margin-top: 40px;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+    }
+
+    :global(h3) {
+      margin-top: 32px;
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+    }
+
+    :global(h4) {
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+
+    :global(p) {
+      margin-bottom: 12px;
+    }
+  }
+
+  .content-end {
+    margin-top: 24px;
+  }
+  .content-end-button {
+    width: 100%;
+    padding: 12px 0;
+  }
+
+  @include pc {
     .h1 {
       margin-bottom: 16px;
-      font-size: rpx(min(26px, 26rpx), mp);
-      font-weight: bold;
+      font-size: rpx(min(56px, 56rpx), pc);
     }
 
     .tags {
-      margin-bottom: 32px;
-      color: $primary;
-    }
-    .tag {
-      font-size: 16px;
-      line-height: 2;
-    }
-
-    .thumbnail {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      margin-bottom: 32px;
-      border: 2px solid $outline-variant;
-      border-top-left-radius: 24px;
-      border-bottom-right-radius: 24px;
-    }
-
-    .article-content {
-      margin-bottom: 80px;
-    }
-
-    .article-text {
-      :global(h1) {
-        margin-top: 40px;
-        margin-bottom: 12px;
-        font-size: 1.8rem;
-      }
-
-      :global(h2) {
-        margin-top: 40px;
-        margin-bottom: 12px;
-        font-size: 1.5rem;
-      }
-
-      :global(h3) {
-        margin-top: 32px;
-        margin-bottom: 12px;
-        font-size: 1.3rem;
-      }
-
-      :global(h4) {
-        margin-top: 24px;
-        margin-bottom: 12px;
-        font-size: 1.2rem;
-      }
-
-      :global(p) {
-        margin-bottom: 12px;
-      }
+      margin-bottom: 72px;
     }
 
     .content-end {
-      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      margin-top: 48px;
     }
     .content-end-button {
-      width: 100%;
-      padding: 12px 0;
+      width: auto;
+      padding: 12px 72px;
     }
-
-    @include pc {
-      .h1 {
-        margin-bottom: 16px;
-        font-size: rpx(min(56px, 56rpx), pc);
-      }
-
-      .tags {
-        margin-bottom: 72px;
-      }
-
-      .content-end {
-        display: flex;
-        justify-content: center;
-        margin-top: 48px;
-      }
-      .content-end-button {
-        width: auto;
-        padding: 12px 72px;
-      }
-    }
-  </style>
-</Layout>
+  }
+</style>

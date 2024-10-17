@@ -4,7 +4,6 @@
     id: string;
   };
 
-	console.log("aaaaa")
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->

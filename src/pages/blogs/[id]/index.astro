@@ -7,15 +7,29 @@ export const prerender = false;
 
 const blogId = Astro.params.id!;
 
+// ブログ記事の取得
 const blog = await fetchBlogById(blogId);
 
 const blogTitle = blog.title;
-
-const blogDescription = blog.content
+const blogDescription = blog.content.rendered
   .replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
   .slice(0, 104);
 
-const blogThumbnail = blog.thumbnail.url;
+const blogThumbnail = getFeaturedImage(blog);
+
+function getFeaturedImage(post: any) {
+  return post._embedded['wp:featuredmedia']
+    ? post._embedded['wp:featuredmedia'][0].source_url
+    : '';
+}
+
+function getTagsAndCategories(post: any) {
+  const postTags = post._embedded['wp:term'][1] || [];
+  const postCategories = post._embedded['wp:term'][0] || [];
+  return { postTags, postCategories };
+}
+
+const { postTags } = getTagsAndCategories(blog);
 ---
 
 <Layout
@@ -34,10 +48,16 @@ const blogThumbnail = blog.thumbnail.url;
     class: 'main app-page-padding-y app-page-padding-x',
   }}
 >
-  <h1 class="h1">{blogTitle}</h1>
+  <h1 class="h1">{blog.title.rendered}</h1>
 
   <div class="tags">
-    {blog.tags.map((tag) => <span class="tag"># {tag.name}</span>)}
+    {
+      postTags.length > 0 ? (
+        postTags.map((tag: any) => <span class="tag"># {tag.name}</span>)
+      ) : (
+        <span>タグがありません</span>
+      )
+    }
   </div>
 
   <article class="article">
@@ -50,20 +70,7 @@ const blogThumbnail = blog.thumbnail.url;
     />
 
     <div class="article-content">
-      <section class="article-text" set:html={blog.content}>
-        <!-- <button
-					class="content-end-button app-rounded-button app-mono"
-					aria-label="記事の先頭に戻る"
-					on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-				>
-					PAGE TOP
-				</button> -->
-      </section>
-
-      <!-- 
-        <nav class="nav">
-          <slot name="nav" />
-        </nav> -->
+      <section class="article-text" set:html={blog.content.rendered} />
     </div>
   </article>
 

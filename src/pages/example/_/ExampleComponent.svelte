@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   import { timestampToYYYYMMDD } from '@/utils/date';
   import { searchBlogCategoryParams, searchBlogTagParams } from './blog.state';
-  const basePostsQueryEndpoint = `http://localhost:10003//wp-json/wp/v2/posts?_embed`;
+	const basePostsQueryEndpoint = `http://localhost:10003//wp-json/wp/v2/posts?_embed`;
   let postsQueryEndpoint = basePostsQueryEndpoint;
 
   // 新しい関数: クエリエンドポイントを更新する
