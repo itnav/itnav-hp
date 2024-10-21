@@ -6,79 +6,110 @@
   import { onMount } from 'svelte';
 
   export let contentElementId: string | undefined;
+ 
+	const basePostsQueryEndpoint = `http://localhost:10003//wp-json/wp/v2/posts?_embed`;
+  let postsQueryEndpoint = basePostsQueryEndpoint;
 
-  const baseBlogsQueryEndpoint = `/blogs/blogs.json`;
-  let blogsQueryEndpoint = baseBlogsQueryEndpoint;
+  // 新しい関数: クエリエンドポイントを更新する
+  function updateQueryEndpoint() {
+    const categoryIds = Object.entries($searchBlogCategoryParams)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([id, _]) => id);
 
-  $: blogsQuery = createFetcherStore<GetResponse>(blogsQueryEndpoint, {
-    fetcher: () => fetch(blogsQueryEndpoint).then((res) => res.json()),
+    const tagIds = Object.entries($searchBlogTagParams)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([id, _]) => id);
+
+    let newEndpoint = basePostsQueryEndpoint;
+
+    if (categoryIds.length > 0) {
+      newEndpoint += `&categories=${categoryIds.join(',')}`;
+    }
+
+    if (tagIds.length > 0) {
+      newEndpoint += `&tags=${tagIds.join(',')}`;
+    }
+
+    postsQueryEndpoint = newEndpoint;
+  }
+
+  // リアクティブステートメント: フィルターが変更されたときにエンドポイントを更新
+  $: {
+    $searchBlogCategoryParams;
+    $searchBlogTagParams;
+    updateQueryEndpoint();
+  }
+
+  // 更新: postsQueryエンドポイントが変更されたときに新しいクエリを実行
+  $: postsQuery = createFetcherStore(postsQueryEndpoint, {
+    fetcher: () => fetch(postsQueryEndpoint).then((res) => res.json()),
   });
 
-  let hasCachedInitialBlog = true;
-  onMount(() => (hasCachedInitialBlog = !!blogsQuery.get().data));
+  // カテゴリーとタグのエンドポイントを追加
+  const categoriesQueryEndpoint = `http://localhost:10003//wp-json/wp/v2/categories`;
+  const categoriesQuery = createFetcherStore(categoriesQueryEndpoint, {
+    fetcher: () => fetch(categoriesQueryEndpoint).then((res) => res.json()),
+  });
 
-  $: {
-    let blogCategoryQueryParams = '';
-    Object.entries($searchBlogCategoryParams).forEach(
-      ([key, value]) => value && (blogCategoryQueryParams += `,${key}`),
-    );
+  const tagsQueryEndpoint = `http://localhost:10003//wp-json/wp/v2/tags`;
+  const tagsQuery = createFetcherStore(tagsQueryEndpoint, {
+    fetcher: () => fetch(tagsQueryEndpoint).then((res) => res.json()),
+  });
 
-    let blogTagQueryParams = '';
-    Object.entries($searchBlogTagParams).forEach(
-      ([key, value]) => value && (blogTagQueryParams += `,${key}`),
-    );
+  $: isLoading = $postsQuery.loading || $categoriesQuery.loading || $tagsQuery.loading;
+  $: error = $postsQuery.error || $categoriesQuery.error || $tagsQuery.error;
 
-    let blogQuery = '';
-    if (blogCategoryQueryParams) {
-      blogQuery = `category=${blogCategoryQueryParams.substring(1)}`;
-    }
-    if (blogTagQueryParams) {
-      if (blogQuery) blogQuery += '&';
-      blogQuery = `tag=${blogTagQueryParams.substring(1)}`;
-    }
+  let hasCachedInitialPost = true;
+  onMount(() => {
+    hasCachedInitialPost = !!postsQuery.get().data;
+  });
 
-    blogsQueryEndpoint = `${baseBlogsQueryEndpoint}${blogQuery ? `?${blogQuery}` : ''}`;
+  function getTagsAndCategories(post: any) {
+    const tags = post._embedded['wp:term'][1] || [];
+    const categories = post._embedded['wp:term'][0] || [];
+    return { tags, categories };
   }
+
+  function getFeaturedImage(post: any) {
+    return post._embedded['wp:featuredmedia'] ? post._embedded['wp:featuredmedia'][0].source_url : '';
+  }
+
+  let hasCachedInitialItem = true;
+  onMount(() => {
+    hasCachedInitialItem = !!(
+      categoriesQuery.get().data && tagsQuery.get().data
+    );
+  });
 </script>
 
 <section class="blogs">
-  {#if $blogsQuery.loading}
-    <div class="loading">検索中...</div>
-  {:else if $blogsQuery.error}
+  {#if isLoading}
+    <div class="loading">記事を読み込んでいます...</div>
+  {:else if error}
     <div class="error">記事が取得できませんでした。</div>
-  {:else if !$blogsQuery.data?.length}
+  {:else if !$postsQuery.data?.length}
     <div class="no-content">記事がみつかりませんでした。</div>
   {:else}
-    <div
-      class="cards {hasCachedInitialBlog ? '' : 'animate'}"
-      id={contentElementId}
-    >
-      {#each $blogsQuery.data as blog, i}
-        <a
-          class="card"
-          href={`/blogs/${blog.id}`}
-          aria-label={`記事「${blog.title}」へ遷移する`}
-        >
+    <div class="cards {hasCachedInitialPost ? '' : 'animate'}">
+      {#each $postsQuery.data as post}
+        <a class="card" href={`/blogs/${post.id}`} aria-label={`記事「${post.title.rendered}」へ遷移する`}>
           <div class="thumbnail-frame">
             <img
               class="thumbnail"
-              src={blog.thumbnail.url || ''}
-              alt={`記事「${blog.title}」のサムネイル画像`}
-              style={`view-transition-name: blog-thumbnail-${blog.id};`}
+              src={getFeaturedImage(post)}
+              alt={`記事「${post.title.rendered}」のサムネイル画像`}
+              style={`view-transition-name: blog-thumbnail-${post.id};`}
             />
           </div>
 
           <div class="content">
-            <span class="category app-tooltip">{blog.category.name}</span>
-            <span class="event-at">
-              {timestampToYYYYMMDD(blog.startedEventAt)}
-            </span>
-
-            <h2 class="title">{blog.title}</h2>
+            <span class="category app-tooltip">{getTagsAndCategories(post).categories[0]?.name || '未分類'}</span>
+            <span class="event-at">{timestampToYYYYMMDD(post.date)}</span>
+            <h2 class="title">{@html post.title.rendered}</h2>
 
             <div class="tags">
-              {#each blog.tags as tag}
-                <span class="tag"># {tag.name}</span>
+              {#each getTagsAndCategories(post).tags as tag}
+                <span class="tag"># {@html tag.name}</span>
               {/each}
             </div>
           </div>

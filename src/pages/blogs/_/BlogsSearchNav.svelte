@@ -1,25 +1,67 @@
 <script lang="ts">
   import { createFetcherStore } from '@/stores/nanostore';
-  import type { GetRequest } from '../categories.json';
   import { searchBlogCategoryParams, searchBlogTagParams } from './blog.state';
   import { onMount } from 'svelte';
 
-  const categoriesQueryEndpoint = `/blogs/categories.json`;
-  const categoriesQuery = createFetcherStore<GetRequest>(
-    categoriesQueryEndpoint,
-    { fetcher: () => fetch(categoriesQueryEndpoint).then((res) => res.json()) },
-  );
+	const basePostsQueryEndpoint = `http://localhost:10003//wp-json/wp/v2/posts?_embed`;
+  let postsQueryEndpoint = basePostsQueryEndpoint;
 
-  const tagsQueryEndpoint = `/blogs/tags.json`;
-  const tagsQuery = createFetcherStore<GetRequest>(tagsQueryEndpoint, {
+  // 新しい関数: クエリエンドポイントを更新する
+  function updateQueryEndpoint() {
+    const categoryIds = Object.entries($searchBlogCategoryParams)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([id, _]) => id);
+
+    const tagIds = Object.entries($searchBlogTagParams)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([id, _]) => id);
+
+    let newEndpoint = basePostsQueryEndpoint;
+
+    if (categoryIds.length > 0) {
+      newEndpoint += `&categories=${categoryIds.join(',')}`;
+    }
+
+    if (tagIds.length > 0) {
+      newEndpoint += `&tags=${tagIds.join(',')}`;
+    }
+
+    postsQueryEndpoint = newEndpoint;
+  }
+
+  // リアクティブステートメント: フィルターが変更されたときにエンドポイントを更新
+  $: {
+    $searchBlogCategoryParams;
+    $searchBlogTagParams;
+    updateQueryEndpoint();
+  }
+
+  // 更新: postsQueryエンドポイントが変更されたときに新しいクエリを実行
+  $: postsQuery = createFetcherStore(postsQueryEndpoint, {
+    fetcher: () => fetch(postsQueryEndpoint).then((res) => res.json()),
+  });
+
+  // カテゴリーとタグのエンドポイントを追加
+  const categoriesQueryEndpoint = `http://localhost:10003//wp-json/wp/v2/categories`;
+  const categoriesQuery = createFetcherStore(categoriesQueryEndpoint, {
+    fetcher: () => fetch(categoriesQueryEndpoint).then((res) => res.json()),
+  });
+
+  const tagsQueryEndpoint = `http://localhost:10003//wp-json/wp/v2/tags`;
+  const tagsQuery = createFetcherStore(tagsQueryEndpoint, {
     fetcher: () => fetch(tagsQueryEndpoint).then((res) => res.json()),
   });
 
   $: categories = $categoriesQuery.data;
   $: tags = $tagsQuery.data;
 
-  $: isLoading = $categoriesQuery.loading || $tagsQuery.loading;
-  $: error = $categoriesQuery.error || $tagsQuery.error;
+  $: isLoading = $postsQuery.loading || $categoriesQuery.loading || $tagsQuery.loading;
+  $: error = $postsQuery.error || $categoriesQuery.error || $tagsQuery.error;
+
+  let hasCachedInitialPost = true;
+  onMount(() => {
+    hasCachedInitialPost = !!postsQuery.get().data;
+  });
 
   let hasCachedInitialItem = true;
   onMount(() => {
