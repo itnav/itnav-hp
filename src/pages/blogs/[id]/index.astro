@@ -7,7 +7,7 @@ export const prerender = false;
 
 const blogId = Astro.params.id!;
 
-// ブログ記事の取得。
+// ブログ記事の取得
 const blog = await fetchBlogById(blogId);
 
 const blogTitle = blog.title;
