@@ -1,0 +1,73 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+export const prerender = false;
+---
+
+<script>
+  import { safelyNavigateBack } from '@/utils/navigation';
+
+  const backButton = document.getElementById('back-button');
+
+  backButton?.addEventListener('click', () => {
+    safelyNavigateBack({ fallbackPath: '/' });
+  });
+</script>
+
+<Layout
+  seo={{
+    title: 'Not Found',
+    noindex: true,
+  }}
+  main={{
+    class: 'main app-page-padding-y app-page-padding-x',
+  }}
+>
+  <h1 class="h1">NOT FOUND</h1>
+
+  <p class="text">お探しのページが見つかりませんでした。</p>
+
+  <a href="/" class="nav-button">TOP</a>
+  <button id="back-button" class="nav-button">前のページに戻る</button>
+</Layout>
+
+<style is:global>
+  .main {
+    width: 100%;
+    max-width: 1024px;
+    height: 100dvh;
+    margin: 0 auto;
+  }
+
+  .nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    color: #fff;
+    cursor: pointer;
+    background-color: #333;
+    border: none;
+    border-radius: 0.25rem;
+
+    &:hover {
+      background-color: #555;
+    }
+  }
+</style>
+
+<style lang="scss">
+  .h1 {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+
+    @include mp {
+      font-size: 2rem;
+    }
+  }
+
+  .text {
+    margin-bottom: auto;
+  }
+</style>

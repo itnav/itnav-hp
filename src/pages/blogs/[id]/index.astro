@@ -7,7 +7,11 @@ export const prerender = false;
 
 const blogId = Astro.params.id!;
 
-const blog = await fetchBlogById(blogId);
+const blog = await fetchBlogById(blogId).catch(() => null);
+
+if (!blog) {
+  return Astro.redirect('/404');
+}
 
 const blogTitle = blog.title;
 
@@ -94,6 +98,7 @@ const blogThumbnail = blog.thumbnail.url;
       width: 100%;
       aspect-ratio: 16 / 9;
       margin-bottom: 32px;
+      object-fit: contain;
       border: 2px solid $outline-variant;
       border-top-left-radius: 24px;
       border-bottom-right-radius: 24px;
