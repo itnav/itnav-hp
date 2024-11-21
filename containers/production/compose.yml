@@ -14,6 +14,7 @@ services:
       STAGE: production
     volumes:
       - ../../reverse-proxy/production/cert:/var/lib/https-portal
+    restart: always
 
   web:
     container_name: ${WEB_CONTAINER_NAME}
@@ -29,3 +30,4 @@ services:
       - ../../${ENV_FILE}
     environment:
       HOST: 0.0.0.0
+    restart: always
