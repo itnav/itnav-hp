@@ -1,4 +1,12 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
+  let additionalClass = '';
+
+  onMount(() => {
+    additionalClass = 'animate';
+  });
+
   let sectionElement: Element;
 
   let centerLineElement: Element;
@@ -9,7 +17,7 @@
     animationTarget: Element,
     intoViewTarget: Element = animationTarget,
   ) {
-    animationTarget.classList.add('animate');
+    animationTarget.classList.add(additionalClass);
 
     if (document.documentElement.scrollTop === 0) {
       intoViewTarget.scrollIntoView({
@@ -22,7 +30,7 @@
 
 <section class="section" bind:this={sectionElement}>
   <h1 class="heading">
-    <span class="line animate">
+    <span class="line {additionalClass}">
       <strong class="char char-1 strong strong-1">誰</strong>
       <span class="char char-2">だ</span>
       <span class="char char-3">っ</span>
@@ -102,8 +110,8 @@
 
   .heading {
     display: inline-flex;
-    flex-direction: column;
     flex-grow: 1;
+    flex-direction: column;
     justify-content: space-evenly;
     font-size: rpx(min(64px, 32rpx), mp, vh);
     line-height: 1.2;
