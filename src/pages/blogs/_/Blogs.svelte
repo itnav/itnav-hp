@@ -71,7 +71,7 @@
           <div class="content">
             <span class="category app-tooltip">{blog.category.name}</span>
             <span class="event-at">
-              {timestampToYYYYMMDD(blog.startedEventAt)}
+              {timestampToYYYYMMDD(blog.createdAt)}
             </span>
 
             <h2 class="title">{blog.title}</h2>
@@ -182,8 +182,9 @@
     font-size: 22px;
     font-weight: bold;
     text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   .tags {

@@ -38,7 +38,7 @@ FROM builder-deps as builder
 
 
 # アプリケーションを実行するステージ
-FROM oven/bun:distroless AS runtime
+FROM oven/bun:1.1.36-distroless AS runtime
 
 	## 本番専用の依存関係をコピー
 	# COPY --from=production-deps /app/node_modules ./node_modules
