@@ -32,5 +32,6 @@ async function get({ request }: APIContext) {
   return fetchBlogs({
     orders: '-createdAt',
     filters,
+    limit: 100,
   });
 }
