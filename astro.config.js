@@ -21,6 +21,10 @@ export default defineConfig({
     port: Number(import.meta.env.WEB_PORT) || void 0,
   },
 
+  redirects: {
+    '/members': '/', // メンバーページは非表示化しているのでトップページにリダイレクト
+  },
+
   integrations: [
     /**
      * Astro 内で Svelte を使用するためのインテグレーション
