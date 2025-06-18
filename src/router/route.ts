@@ -19,13 +19,13 @@ export const route = (<const>{
     path: (id: string) => `/services/${id}`,
   },
 
-  members: {
-    path: '/members',
-  },
+  // members: {
+  //   path: '/members',
+  // },
 
-  member: {
-    path: (id: string) => `/members/${id}`,
-  },
+  // member: {
+  //   path: (id: string) => `/members/${id}`,
+  // },
 
   blogs: {
     path: '/blogs',
