@@ -27,10 +27,10 @@
 		<priority>0.80</priority>
 	</url>
 
-	<url>
+	<!-- <url>
 		<loc>https://itnav.co.jp/members</loc>
 		<priority>0.80</priority>
-	</url>
+	</url> -->
 
 	<url>
 		<loc>https://itnav.co.jp/privacy</loc>
